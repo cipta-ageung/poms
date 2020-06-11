@@ -1,0 +1,1 @@
+<?php return ['password'=>'Password minimal harus delapan karakter dan sesuai.','reset'=>'Password telah berhasil direset!','sent'=>'Kami telah mengirim tautan untuk mengatur ulang kata sandi!','token'=>'Token untuk reset password tidak sesuai.','user'=>'Kami tidak menemukan user yang sesuai dengan email ini.',];

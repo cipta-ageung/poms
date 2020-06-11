@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poms-app
+  namespace: default
+  labels:
+    app: poms-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poms-app
+  template:
+    metadata:
+      labels:
+        app: poms-app
+    spec:
+      volumes:
+        - name: public
+          persistentVolumeClaim:
+            claimName: poms-pvc-public
+        - name: logs
+          persistentVolumeClaim:
+            claimName: poms-pvc-logs
+      containers:
+        - image: ciptahub/poms
+          imagePullPolicy: Always
+          name: poms-app
+          ports:
+          - containerPort: 80
+          workingDir: /var/www/
+          volumeMounts:
+            - name: public
+              mountPath: /var/www/storage/app/public/
+            - name: logs
+              mountPath: /var/www/storage/logs
+      restartPolicy: Always

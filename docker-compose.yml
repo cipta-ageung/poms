@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  app:
+    image: ciptahub/poms:latest
+    container_name: poms-app
+    restart: always
+    working_dir: /var/www/
+    volumes:
+      - poms-storage-volume:/var/www/storage
+    networks:
+      - poms-net
+    ports:
+      - 8080:80
+
+volumes:
+  poms-storage-volume:
+    driver: local
+
+networks:
+  poms-net:
+    driver: bridge

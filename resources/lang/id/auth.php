@@ -1,0 +1,1 @@
+<?php return ['failed'=>'Credential Tidak Sesuai.','throttle'=>'Terlalu banyak upaya masuk. Silakan coba lagi dalam :seconds detik.',];
