@@ -39,7 +39,8 @@ class MilestoneImport implements ToModel, WithHeadingRow
 
         if(is_numeric($row['No. ']) || !isset($row['No. '])){
             $milestone = Milestone::where('title', $this->milestonename)->first();
-            
+            $start_date = strtotime($row['TANGGAL MULAI']);
+            $due_date = strtotime($row['TANGGAL SELESAI']);
             return new Task([
                 'title' => $row['URAIAN PEKERJAAN'],
                 'milestone_id' => $milestone['id'],
@@ -48,15 +49,22 @@ class MilestoneImport implements ToModel, WithHeadingRow
                 'assign_to' => \Auth::user()->id,
                 'project_id' => $this->projectFile->project_id,
                 'stage'=> 1,
+                'order' => doubleval($row['ANGGARAN']),
+                'start_date' => date('Y-m-d',$start_date),
+                'due_date' => date('Y-m-d',$due_date),
             ]);
         }
         
         // simpan history milestone
         $this->milestonename=$row['URAIAN PEKERJAAN'];
 
+        $b = intval($row['ANGGARAN']);
+        $a = number_format(strval($b), 2,".","");
         return new Milestone([
             'title' => $row['URAIAN PEKERJAAN'],
             'status' => 'Incomplete',
+            'cost' => doubleval($a),
+            'description' => ' ',
             'project_id' => $this->projectFile->project_id,
         ]);
     }

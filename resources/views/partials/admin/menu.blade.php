@@ -7,10 +7,11 @@
 @endphp
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
-        <div class="sidebar-brand">
+        <div class="sidebar-brand" style="margin-bottom:100px">
             <a href="{{route('dashboard')}}">
                 <img class="img-fluid" src="{{ asset(Storage::url('logo/logo.png')) }}" alt="image" width="">
             </a>
+            <hr/>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{route('dashboard')}}">
