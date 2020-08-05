@@ -9,6 +9,7 @@ use App\ProjectFile;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 HeadingRowFormatter::default('none');
 
@@ -39,8 +40,6 @@ class MilestoneImport implements ToModel, WithHeadingRow
 
         if(is_numeric($row['No. ']) || !isset($row['No. '])){
             $milestone = Milestone::where('title', $this->milestonename)->first();
-            $start_date = strtotime($row['TANGGAL MULAI']);
-            $due_date = strtotime($row['TANGGAL SELESAI']);
             return new Task([
                 'title' => $row['URAIAN PEKERJAAN'],
                 'milestone_id' => $milestone['id'],
@@ -50,8 +49,8 @@ class MilestoneImport implements ToModel, WithHeadingRow
                 'project_id' => $this->projectFile->project_id,
                 'stage'=> 1,
                 'order' => doubleval($row['ANGGARAN']),
-                'start_date' => date('Y-m-d',$start_date),
-                'due_date' => date('Y-m-d',$due_date),
+                'start_date' => Date::excelToDateTimeObject($row['TANGGAL MULAI']),
+                'due_date' => Date::excelToDateTimeObject($row['TANGGAL SELESAI']),
             ]);
         }
         
