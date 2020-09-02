@@ -38,7 +38,7 @@
 }
 
 body.sidebar-mini .main-sidebar .sidebar-brand-sm a span {
-    color: #6777ef;
+    color: #2980B9;
 }
 
 .staff-wrap .staff-grid-view, .note {
@@ -159,7 +159,7 @@ body.sidebar-mini .main-sidebar .sidebar-brand-sm a span {
 
 .staff-wrap .staff-grid-view .btn-wrap svg {
     height: 16px;
-    fill: #6777ef;
+    fill: #2980B9;
 }
 
 .card-header .btn-sm span svg, .create-btn span svg {
@@ -524,7 +524,7 @@ ul li .project-highlight .info span {
     font-weight: 700;
     line-height: initial;
     font-size: 12px;
-    color: #6777ef;
+    color: #2980B9;
 }
 
 ul li .project-highlight .info p {
@@ -774,7 +774,7 @@ ul.navbar-right li .dropdown-list {
 
 a.task-inner-title:focus, a.task-inner-title:active, a.task-inner-title .dropdown-item.active {
     background-color: transparent;
-    color: #6777ef !important;
+    color: #2980B9 !important;
 }
 
 #task-inner-Modal label {
@@ -838,13 +838,13 @@ a.task-inner-title:focus, a.task-inner-title:active, a.task-inner-title .dropdow
 }
 
 .navbar-right .manage-language-btn {
-    color: #6777ef;
+    color: #2980B9;
     font-weight: 600;
     border-radius: 0;
 }
 
 .navbar-right .manage-language-btn:hover {
-    color: #6777ef !important;
+    color: #2980B9 !important;
     background-color: rgba(103, 119, 239, 0.1) !important;
 }
 

@@ -307,7 +307,7 @@
                                     <h4>{{__('Milestones')}} ({{count($project->milestones)}})</h4>
                                     @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' && in_array('create milestone',$perArr)))
                                         <div class="card-header-action">
-                                        <a class="btn btn-primary btn-sm text-white" href="{{ asset(Storage::url('app/public/project_files/milestone-poms.xlsx')) }}">Download Format Excel</a>
+                                        <a class="btn btn-primary btn-sm text-white" href="{{ asset(Storage::url('app/public/project_files/Contoh Milestones.xls')) }}">Download Format Excel</a>
                                             <a href="#" data-url="{{ route('project.milestone',$project->id) }}" data-ajax-popup="true" data-title="{{__('Create New Milestone')}}" class="btn btn-primary btn-sm">
                                                 {{__('Create Milestone')}}
                                             </a>
@@ -324,7 +324,7 @@
                                                 </div>
                                                 <div class="milestones px-1">
                                                     <b>{{__('Milestone Cost')}}</b>
-                                                    <span>{{ \Auth::user()->priceFormat($milestone->cost) }}</span>
+                                                    <span>$ {{number_format($milestone->cost)}}</span>
                                                 </div>
                                                 <div class="tag px-1">
                                                     <span>
@@ -425,6 +425,7 @@
                 }
             },
             error: function (file, response) {
+                alert(JSON.stringify(response));
                 myDropzone.removeFile(file);
                 if (response.error) {
                     toastrs('Error', response.error, 'error');

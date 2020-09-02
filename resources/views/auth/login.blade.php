@@ -1,6 +1,9 @@
 @extends('layouts.auth')
 @section('content')
-    <section class="section">
+    <section class="section" style="background: #005AA7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #FFFDE4, #005AA7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #FFFDE4, #005AA7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 pt-4">
@@ -18,7 +21,7 @@
             <div class="row">
                 <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
                     <div class="login-brand">
-                        <img class="img-fluid" src="{{ asset(Storage::url('logo/logo.png')) }}" alt="image" width="">
+                        <img class="img-fluid rounded" src="{{ asset(Storage::url('logo/logo.png')) }}" alt="image" width="">
                     </div>
 
                     <div class="card card-primary">

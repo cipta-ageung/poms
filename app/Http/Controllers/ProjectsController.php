@@ -446,7 +446,7 @@ class ProjectsController extends Controller
     public function fileUpload($id, Request $request)
     {
         $project = Projects::find($id);
-        $request->validate(['file' => 'required|mimes:xls,xlsx|max:2048']);
+        //$request->validate(['file' => 'required|mimes:xls,xlsx|max:2048']);
         $file_name = $request->file->getClientOriginalName();
         $file_path = $project->id . "_" . md5(time()) . "_" . $request->file->getClientOriginalName();
         $request->file->storeAs('public/project_files', $file_path);

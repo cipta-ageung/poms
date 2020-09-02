@@ -18,7 +18,8 @@ Route::get('/register', function () {
 });
 
 Route::get('/login/{lang?}', 'Auth\LoginController@showLoginForm')->name('login');
-Route::get('/password/reset/{lang?}', 'Auth\LoginController@showLinkRequestForm')->name('change.langPass');
+// Route::get('/password/reset/{lang?}', 'Auth\LoginController@showLinkRequestForm')->name('change.langPass');
+Route::get('/password/reset/id', 'Auth\LoginController@showLinkRequestForm')->name('change.langPass');
 
 //Route::post('searchJson', 'ProjectsController@getSearchJson')->name('search.json')->middleware(['auth','xss']);
 Route::get('searchJson/{search?}', 'ProjectsController@getSearchJson')->name('search.json')->middleware(['auth', 'xss']);

@@ -83,6 +83,7 @@ class InvoiceController extends Controller
             }
 
             $invoice             = new Invoice();
+            $invoice->id = $this->invoiceNumber();
             $invoice->invoice_id = $this->invoiceNumber();
             $invoice->status     = 0;
             $invoice->issue_date = $request->issue_date;
@@ -126,7 +127,7 @@ class InvoiceController extends Controller
             return 1;
         }
 
-        return $latest->invoice_id + 1;
+        return $latest->id + 1;
     }
 
     public function show(Invoice $invoice)
@@ -744,7 +745,7 @@ class InvoiceController extends Controller
     {
         if(\Auth::user()->can('send invoice'))
         {
-            $invoice          = Invoice::where('invoice_id', $id)->first();
+            $invoice          = Invoice::where('id', $id)->first();
             $client           = !empty($invoice->project) ? $invoice->project->client() : '';
             $invoice->name    = !empty($client) ? $client->name : 'Dear';
             $email            = !empty($client) ? $client->email : '';

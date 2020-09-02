@@ -63,7 +63,7 @@
                                                             <td class="text-center">
 
                                                                 @if($expense->attachment)
-                                                                    <a href="{{asset(Storage::url('app/public/attachment/'. $expense->attachment))}}" download="" class="table-action" data-toggle="tooltip" data-original-title="{{__('Download')}}">
+                                                                    <a href="{{asset(Storage::url('app/attachment/'. $expense->attachment))}}" download="" class="table-action" data-toggle="tooltip" data-original-title="{{__('Download')}}">
                                                                         <i class="fa fa-download"></i>
                                                                     </a>
                                                                 @endif
