@@ -75,7 +75,6 @@
                                             <div class="progress-bar" role="progressbar" aria-valuenow="100"
                                                 aria-valuemin="0" aria-valuemax="100" id="taskProgress"></div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -89,13 +88,19 @@
 
                         @endif
 
+                        @if($maxPercentage>0)
                         <form method="POST" id="form-checklist" class="collapse col-md-12"
                             data-action="{{ route('task.checklist.store',[$task->id]) }}">
                             @csrf
                             <div class="form-group">
                                 <label>{{__('Name')}}</label>
                                 <input type="text" name="name" class="form-control" required
-                                    placeholder="{{__('Checklist Name')}}">
+                                    placeholder="{{__('Checklist Name')}}" />
+                            </div>
+                            <div class="form-group">
+                                <label>Percentage</label>
+                                <input type="number" name="percentage" class="form-control" required
+                                    placeholder="percentage" min="0" max="{{$maxPercentage}}" />
                             </div>
                             <div class="text-right">
                                 <div class="btn-group mb-2 ml-2 d-none d-sm-inline-block">
@@ -103,8 +108,11 @@
                                 </div>
                             </div>
                             <br>
-
                         </form>
+                        @else
+                        <br /><br />
+                        <div class="col-lg-12 text-warning">Current percentage total all checklist task is 100% .</div>
+                        @endif
                     </div>
                     <hr>
                     <div class="row">
@@ -113,14 +121,15 @@
                             <li class="media">
                                 <div class="media-body">
                                     <h5 class="mt-0 mb-1 font-weight-bold"></h5>
-                                    <div class=" custom-control custom-checkbox checklist-checkbox">
+                                    <div class=" custom-control custom-checkbox checklist-checkbox" style="float: left;">
                                         @can('create checklist')
                                         @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' &&
                                         in_array('edit checklist',$perArr)))
                                         <input type="checkbox" id="checklist-{{$checkList->id}}"
-                                            class="custom-control-input taskCheck"
-                                            {{($checkList->status==1)?'checked':''}} value="{{$checkList->id}}"
-                                            data-url="{{route('task.checklist.update',[$checkList->task_id,$checkList->id])}}">
+                                            class="custom-control-input taskCheck" 
+                                            data-percentage="{{$checkList->percentage}}" value="{{$checkList->id}}"
+                                            data-url="{{route('task.checklist.update',[$checkList->task_id,$checkList->id])}}" 
+                                            {{($checkList->status==1)?'checked':''}}  />
                                         <label for="checklist-{{$checkList->id}}" class="custom-control-label"></label>
                                         @endif
                                         @endcan
@@ -130,20 +139,19 @@
                                         @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' &&
                                         in_array('delete checklist',$perArr)))
                                         <span onclick="myFunction1({{$checkList->task_id}},{{$checkList->id}})"
-                                            class="fa fa-comment"  type="button"  id="intab"
+                                            type="button"  id="intab"
                                             value="{{$checkList->id}}">
-                                            <!-- <i class=""></i> -->
+                                            <i class="fa fa-comment text-primary"></i>
                                         </span>&nbsp;&nbsp;
 
                                         <span onclick="myFunction({{$checkList->task_id}},{{$checkList->id}})"
                                             type="button" class="fa fa-list" id="valuechecklist-{{$checkList->id}}"
-                                            value="{{$checkList->id}}"></span>&nbsp;
-                                        <!-- <i class="fa fa-list"></i> -->
-                                        <!-- </a> -->
-                                        <a href="#" class="btn btn-outline btn-sm red text-muted delete-checklist"
+                                            value="{{$checkList->id}}"></span>&nbsp;&nbsp;
+                                            
+                                        <span href="#" type="button" class="text-muted delete-checklist"
                                             data-url="{{route('task.checklist.destroy',[$checkList->task_id,$checkList->id])}}">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                            <i class="fa fa-trash text-danger"></i>
+                                        </span>
                                         @endif
 
                                     </div>

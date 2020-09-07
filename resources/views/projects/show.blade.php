@@ -324,7 +324,7 @@
                                                 </div>
                                                 <div class="milestones px-1">
                                                     <b>{{__('Milestone Cost')}}</b>
-                                                    <span>$ {{number_format($milestone->cost)}}</span>
+                                                    <span>{{ \Auth::user()->priceFormat($milestone->cost)}}</span>
                                                 </div>
                                                 <div class="tag px-1">
                                                     <span>

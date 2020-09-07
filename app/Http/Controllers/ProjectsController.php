@@ -734,11 +734,12 @@ class ProjectsController extends Controller
     {
         $task = Task::find($task_id);
         $project = Projects::find($task->project_id);
+        $maxPercentage = 100 - CheckList::where('task_id', $task_id)->sum('percentage');
 
         $permissions = $project->client_project_permission();
         $perArr = (!empty($permissions) ? explode(',', $permissions->permissions) : []);
 
-        return view('projects.taskShow', compact('task', 'perArr'));
+        return view('projects.taskShow', compact('task', 'perArr', 'maxPercentage'));
     }
 
     public function commentStore(Request $request, $project_id, $task_id)
@@ -907,10 +908,11 @@ class ProjectsController extends Controller
     {
 
         $request->validate(
-            ['name' => 'required']
+            ['name' => 'required', 'percentage' => 'required']
         );
         $post['task_id'] = $task_id;
         $post['name'] = $request->name;
+        $post['percentage'] = $request->percentage;
         $post['created_by'] = \Auth::user()->authId();
         $CheckList = CheckList::create($post);
         $CheckList->deleteUrl = route(
@@ -925,6 +927,12 @@ class ProjectsController extends Controller
                 $CheckList->id,
             ]
         );
+        
+        $CheckList->responseUrl = route(
+            'task.show', [
+                $CheckList->task_id,
+            ]
+        );
 
         return $CheckList->toJson();
     }
@@ -935,7 +943,13 @@ class ProjectsController extends Controller
         $checklist = CheckList::find($checklist_id);
         $checklist->delete();
 
-        return "true";
+        $checklist->responseUrl = route(
+            'task.show', [
+                $checklist->task_id,
+            ]
+        );
+
+        return $checklist->toJson();
     }
 
     public function checklistUpdate($task_id, $checklist_id)
@@ -950,6 +964,20 @@ class ProjectsController extends Controller
         $checkList->save();
 
         return $checkList->toJson();
+    }
+    
+    public function checklistPercentage($task_id, $checklist_id)
+    {
+
+        $checkList = CheckList::all();
+        $percentage = 0;
+        foreach($checkList as $list) {
+			if ($list->status == 1) {
+				$percentage = $list->percentage;
+		    }
+		}
+
+        return $percentage;
     }
 
     public function clientPermission($project_id, $client_id)

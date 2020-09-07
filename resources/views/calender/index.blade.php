@@ -62,8 +62,11 @@ $(document).on('click', '#recordButton', function() {
     	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
 	*/
 
+    if(navigator.mediaDevices == undefined){
+	    toastrs('Error', 'please setup your microphone', 'error');
+	}
+	
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-        console.log('asd');
         console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
 
         /*
@@ -326,6 +329,7 @@ $(document).on('click', '.fc-day-grid-event', function(e) {
                 success: function(data) {
                     $('#commonModal .modal-body').html(data);
                     $("#commonModal").modal('show');
+                    taskCheckboxProgres();
                 },
                 error: function(data) {
                     data = data.responseJSON;
@@ -530,35 +534,9 @@ $(document).on('submit', '#form-checklist', function(e) {
         processData: false,
         success: function(data) {
             toastrs('Success', '{{ __("Checklist Added Successfully!")}}', 'success');
-
-            var html = '<li class="media">' +
-                '<div class="media-body">' +
-                '<h5 class="mt-0 mb-1 font-weight-bold"> </h5> ' +
-                '<div class=" custom-control custom-checkbox checklist-checkbox"> ' +
-                '<input type="checkbox" id="checklist-' + data.id +
-                '" class="custom-control-input"  data-url="' + data.updateUrl + '">' +
-                '<label for="checklist-' + data.id +
-                '" class="custom-control-label"></label> ' +
-                '' + data.name + ' </div>' +
-                '<div class="comment-trash" style="float: right"> ' +
-                '                       <span type="button" class="fa fa-comment" ' +
-                '                           onclick="myFunction1(' + data.task_id + ',' + data.id + ')">' +
-                '                     </span>&nbsp;&nbsp;' +
-                '                       <span type="button"  id="valuechecklist-'+data.id+'}" class="fa fa-list"' +
-                '                            onclick="myFunction(' + data.task_id + ',' + data.id + ')">' +
-                '                       </span>&nbsp;' +
-                '                       <a href="#" class="btn btn-outline btn-sm red text-muted delete-checklist"' +
-                '                           data-url="' + data.deleteUrl + '">' +
-                '                           <i class="fa fa-trash"></i>' +
-                '                       </a>' +
-                '</div>' +
-                '</div>' +
-                ' </li>';
-
-
-            $("#check-list").prepend(html);
-            $("#form-checklist input[name=name]").val('');
-            $("#form-checklist").collapse('toggle');
+            $('.modal-body').load(data.responseUrl,function(){
+                $('#commonModal').modal({show:true});
+            });
         },
     });
 });
@@ -610,7 +588,7 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
             toastrs('Error', '{{ __("Some Thing Is Wrong!")}}', 'error');
         }
     });
-    taskCheckbox();
+    taskCheckboxProgres();
 });
 var local_lang = '{{App::getLocale()}}';
 </script>

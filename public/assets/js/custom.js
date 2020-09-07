@@ -1,10 +1,3 @@
-/**
- *
- * You can write your JS code here, DO NOT touch the default style file
- * because it will make it harder for you to update.
- *
- */
-
 "use strict";
 
 $(function () {
@@ -19,13 +12,10 @@ $(document).ready(function () {
             {"sortable": false, "targets": [1]}
         ]
     })
-
-
 });
 
 
 function toastrs(title, message, status) {
-
     toastr[status](message, title)
 }
 
@@ -40,7 +30,7 @@ $(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true
         success: function (data) {
             $('#commonModal .modal-body').html(data);
             $("#commonModal").modal('show');
-            taskCheckbox();
+            taskCheckboxProgres();
             common_bind("#commonModal");
             common_bind_select("#commonModal");
         },
@@ -53,7 +43,7 @@ $(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true
 });
 
 $(document).on('click', 'a[data-ajax-popup-over="true"], button[data-ajax-popup-over="true"], div[data-ajax-popup-over="true"]', function () {
-
+    
     var validate = $(this).attr('data-validate');
     var id = '';
     if (validate) {
@@ -72,7 +62,7 @@ $(document).on('click', 'a[data-ajax-popup-over="true"], button[data-ajax-popup-
         success: function (data) {
             $('#commonModalOver .modal-body').html(data);
             $("#commonModalOver").modal('show');
-            taskCheckbox();
+            taskCheckboxProgres();
         },
         error: function (data) {
             data = data.responseJSON;
@@ -131,30 +121,12 @@ function common_bind(selector = "body") {
             singleDatePicker: true,
             format: 'yyyy-mm-dd',
             locale: date_picker_locale,
-            // todayHighlight: true,
         });
     }
 
     if ($(".jscolor").length) {
         jscolor.installByClassName("jscolor");
     }
-
-    // function init($this) {
-    //     var options = {
-    //         disableTouchKeyboard: true,
-    //         autoclose: false,
-    //         format: 'yyyy-mm-dd'
-    //     };
-    //     $this.datepicker(options);
-    // }
-    //
-    // if ($datepicker.length) {
-    //     $datepicker.each(function () {
-    //         init($(this));
-    //     });
-    // }
-
-
 }
 
 function common_bind_select(selector = "body") {
@@ -167,6 +139,7 @@ function common_bind_select(selector = "body") {
 }
 
 function taskCheckbox() {
+    
     var checked = 0;
     var count = 0;
     var percentage = 0;
@@ -191,6 +164,43 @@ function taskCheckbox() {
     } else if (percentage > 15 && percentage <= 33) {
         $('#taskProgress').addClass('bg-warning');
     } else if (percentage > 33 && percentage <= 70) {
+        $('#taskProgress').addClass('bg-primary');
+    } else {
+        $('#taskProgress').addClass('bg-success');
+    }
+}
+
+function taskCheckboxProgres() {
+    
+    var checked = 0;
+    var count = 0;
+    var percentage = 0;
+
+    var totalPercentage = 0;
+    $(".taskCheck[data-percentage]").each(function(){
+        if($(this).is(":checked")){
+            var dataPercentage = $(this).data('percentage');
+            totalPercentage = totalPercentage + dataPercentage;
+        }
+    });
+    
+    if (isNaN(percentage)) {
+        percentage = 0;
+    }
+    
+    $(".custom-label").text(totalPercentage + "%");
+    $('#taskProgress').css('width', totalPercentage + '%');
+
+    $('#taskProgress').removeClass('bg-warning');
+    $('#taskProgress').removeClass('bg-primary');
+    $('#taskProgress').removeClass('bg-success');
+    $('#taskProgress').removeClass('bg-danger');
+
+    if (totalPercentage <= 15) {
+        $('#taskProgress').addClass('bg-danger');
+    } else if (totalPercentage > 15 && totalPercentage <= 33) {
+        $('#taskProgress').addClass('bg-warning');
+    } else if (totalPercentage > 33 && totalPercentage <= 70) {
         $('#taskProgress').addClass('bg-primary');
     } else {
         $('#taskProgress').addClass('bg-success');

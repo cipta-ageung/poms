@@ -12,7 +12,7 @@
         <div class="bg-color-label">
             @foreach($colors as $k=>$color)
                 <div class="custom-control custom-radio  mb-3 {{$color}}">
-                    <input class="custom-control-input" name="color" id="customCheck_{{$k}}" type="radio" value="{{$color}}">
+                    <input required class="custom-control-input" name="color" id="customCheck_{{$k}}" type="radio" value="{{$color}}">
                     <label class="custom-control-label " for="customCheck_{{$k}}"></label>
                 </div>
             @endforeach
