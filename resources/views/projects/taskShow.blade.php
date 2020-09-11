@@ -100,7 +100,7 @@
                             <div class="form-group">
                                 <label>Percentage</label>
                                 <input type="number" name="percentage" class="form-control" required
-                                    placeholder="percentage" min="0" max="{{$maxPercentage}}" />
+                                    placeholder="percentage" min="0" max="{{$maxPercentage}}" step="any" />
                             </div>
                             <div class="text-right">
                                 <div class="btn-group mb-2 ml-2 d-none d-sm-inline-block">

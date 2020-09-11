@@ -19,7 +19,7 @@ class CreateCheckListTable extends Migration
             $table->integer('task_id')->default('0');
             $table->integer('created_by')->default('0');
             $table->integer('status')->default('0');
-            $table->integer('percentage')->default('0');
+            $table->double('percentage', 15, 2)->default('0.00');
             $table->timestamps();
         });
     }
