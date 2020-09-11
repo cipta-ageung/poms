@@ -58,7 +58,7 @@ class LeadsController extends Controller
             {
                 $validator = \Validator::make(
                     $request->all(), [
-                                       'name' => 'required|max:20',
+                                       'name' => 'required|max:100',
                                        'price' => 'required',
                                        'stage' => 'required',
                                        'owner' => 'required',
@@ -71,7 +71,7 @@ class LeadsController extends Controller
             {
                 $validator = \Validator::make(
                     $request->all(), [
-                                       'name' => 'required|max:20',
+                                       'name' => 'required|max:100',
                                        'price' => 'required',
                                        'stage' => 'required',
                                        'client' => 'required',
@@ -154,7 +154,7 @@ class LeadsController extends Controller
                 {
                     $validator = \Validator::make(
                         $request->all(), [
-                                           'name' => 'required|max:20',
+                                           'name' => 'required|max:100',
                                            'price' => 'required',
                                            'stage' => 'required',
                                            'owner' => 'required',
