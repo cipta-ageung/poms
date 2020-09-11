@@ -79,6 +79,16 @@ $("#close-form-taxes").click(function(){
     </div>
 
     <div class="form-group  col-md-6">
+        {{ Form::label('issue_date', __('Issue Date')) }}
+        {{ Form::text('issue_date', '', array('class' => 'form-control datepicker','required'=>'required')) }}
+        @error('issue_date')
+            <span class="invalid-issue_date" role="alert">
+                <strong class="text-danger">{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+    
+    <div class="form-group  col-md-6">
         {{ Form::label('due_date', __('Due Date')) }}
         {{ Form::text('due_date', '', array('class' => 'form-control datepicker','required'=>'required')) }}
         @error('due_date')
@@ -88,15 +98,6 @@ $("#close-form-taxes").click(function(){
         @enderror
     </div>
 
-    <div class="form-group  col-md-6">
-        {{ Form::label('issue_date', __('Issue Date')) }}
-        {{ Form::text('issue_date', '', array('class' => 'form-control datepicker','required'=>'required')) }}
-        @error('issue_date')
-            <span class="invalid-issue_date" role="alert">
-                <strong class="text-danger">{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
     <div class="form-group  col-md-12">
         {{ Form::label('terms', __('Terms')) }}
         {!! Form::textarea('terms', null, ['class'=>'form-control','rows'=>'2']) !!}
