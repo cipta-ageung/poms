@@ -8,12 +8,12 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\ResetPassword;
 
 class User extends Authenticatable
 {
     use HasRoles;
     use Notifiable;
-
 
     protected $appends = ['profile'];
 
@@ -683,5 +683,10 @@ class User extends Authenticatable
         $settings = Utility::settings();
 
         return $settings["bug_prefix"] . sprintf("%05d", $number);
+    }
+    
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

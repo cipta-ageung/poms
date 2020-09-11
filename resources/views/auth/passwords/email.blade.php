@@ -1,6 +1,9 @@
 @extends('layouts.auth')
 @section('content')
-    <section class="section">
+    <section class="section" style="background: #005AA7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #FFFDE4, #005AA7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #FFFDE4, #005AA7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 pt-4">
@@ -38,7 +41,7 @@
                             </div>
 
                             <div class="form-group">
-                                {{Form::submit(__(' Forgot Passwordd'),array('class'=>'btn btn-primary btn-lg btn-block','id'=>'saveBtn'))}}
+                                {{Form::submit(__(' Forgot Password'),array('class'=>'btn btn-primary btn-lg btn-block','id'=>'saveBtn'))}}
                             </div>
                             {{Form::close()}}
                         </div>

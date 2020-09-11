@@ -22,3 +22,8 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+.DS_Store
+.ftpquota
+error_log
+public/storage.zip
+public/tasks/*
