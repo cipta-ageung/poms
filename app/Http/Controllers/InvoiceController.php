@@ -31,11 +31,12 @@ class InvoiceController extends Controller
         {
             if(\Auth::user()->type == 'client')
             {
-                $invoices = Invoice::select(['invoices.*'])->join('projects', 'projects.id', '=', 'invoices.project_id')->where('projects.client', '=', \Auth::user()->id)->where('invoices.created_by', '=', \Auth::user()->creatorId())->get();
+                $invoices = Invoice::select(['invoices.*'])->join('projects', 'projects.id', '=', 'invoices.project_id')->where('projects.client', '=', 
+                    \Auth::user()->id)->where('invoices.created_by', '=', \Auth::user()->creatorId())->where(invoices.project_id, '>', 0)->get();
             }
             else
             {
-                $invoices = Invoice::where('created_by', '=', \Auth::user()->creatorId())->get();
+                $invoices = Invoice::where('created_by', '=', \Auth::user()->creatorId())->where('project_id', '>', 0)->get();
             }
 
             return view('invoices.index')->with('invoices', $invoices);
@@ -85,6 +86,7 @@ class InvoiceController extends Controller
             $invoice             = new Invoice();
             $invoice->id = $this->invoiceNumber();
             $invoice->invoice_id = $this->invoiceNumber();
+            $invoice->invoice_number = $request->invoice_number;
             $invoice->status     = 0;
             $invoice->issue_date = $request->issue_date;
             $invoice->due_date   = $request->due_date;
@@ -107,7 +109,7 @@ class InvoiceController extends Controller
                     'user_id' => \Auth::user()->creatorId(),
                     'project_id' => (isset($request->project_id) && !empty($request->project_id)) ? $request->project_id : 0,
                     'log_type' => 'Create Invoice',
-                    'remark' => sprintf(__('%s Create new invoice "%s"'), \Auth::user()->name, \Auth::user()->invoiceNumberFormat($invoice->invoice_id)),
+                    'remark' => sprintf(__('%s Create new invoice "%s"'), \Auth::user()->name, $invoice->invoice_number),
                 ]
             );
 
@@ -619,7 +621,8 @@ class InvoiceController extends Controller
             //Set type
             $invoicr->setType("Invoice");
             //Set reference
-            $invoicr->setReference(Utility::invoiceNumberFormat($invoice->id));
+            // $invoicr->setReference(Utility::invoiceNumberFormat($invoice->id));
+            $invoicr->setReference($invoice->invoice_number);
             //Set date
             $invoicr->setDate(Utility::dateFormat($invoice->issue_date));
             //Set due date
@@ -721,8 +724,9 @@ class InvoiceController extends Controller
             $invoice->name      = !empty($client) ? $client->name : 'Dear';
             $email              = !empty($client) ? $client->email : '';
             $invoice->date      = \Auth::user()->dateFormat($invoice->issue_date);
-            $invoice->invoice   = \Auth::user()->invoiceNumberFormat($invoice->invoice_id);
-
+            // $invoice->invoice   = \Auth::user()->invoiceNumberFormat($invoice->invoice_id);
+            $invoice->invoice = $invoice->invoice_number;
+            
             try
             {
                 Mail::to($email)->send(new PaymentReminder($invoice));
@@ -749,7 +753,8 @@ class InvoiceController extends Controller
             $client           = !empty($invoice->project) ? $invoice->project->client() : '';
             $invoice->name    = !empty($client) ? $client->name : 'Dear';
             $email            = !empty($client) ? $client->email : '';
-            $invoice->invoice = \Auth::user()->invoiceNumberFormat($invoice->invoice_id);
+            // $invoice->invoice = \Auth::user()->invoiceNumberFormat($invoice->invoice_id);
+            $invoice->invoice = $invoice->invoice_number;
             $invoiceId        = Crypt::encrypt($invoice->invoice_id);
             $invoice->url     = route('get.invoice', $invoiceId);
             try
@@ -800,7 +805,8 @@ class InvoiceController extends Controller
             $email            = $request->email;
             $invoice          = Invoice::where('invoice_id', $invoice_id)->first();
             $invoice->name    = \Auth::user()->name;
-            $invoice->invoice = \Auth::user()->invoiceNumberFormat($invoice->invoice_id);
+            // $invoice->invoice = \Auth::user()->invoiceNumberFormat($invoice->invoice_id);
+            $invoice->invoice = $invoice->invoice_number;
             $invoiceId        = Crypt::encrypt($invoice->invoice_id);
             $invoice->url     = route('get.invoice', $invoiceId);
             try

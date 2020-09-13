@@ -246,7 +246,6 @@ class ProjectsController extends Controller
         if (\Auth::user()->can('delete project')) {
             $project = Projects::findOrfail($id);
             if ($project->created_by == \Auth::user()->creatorId()) {
-                //                $project->delete();
                 Milestone::where('project_id', $id)->delete();
                 Userprojects::where('project_id', $id)->delete();
                 ActivityLog::where('project_id', $id)->delete();
@@ -288,6 +287,9 @@ class ProjectsController extends Controller
 
                 Task::where('project_id', $id)->delete();
 
+                // delete project after all deleted
+                $project->delete();
+                
                 return redirect()->route('projects.index')->with('success', __('Project successfully deleted.'));
             } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
@@ -441,6 +443,59 @@ class ProjectsController extends Controller
         $milestone = Milestone::find($id);
 
         return view('projects.milestoneShow', compact('milestone'));
+    }
+    
+    public function milestoneConfirmDestroy($project_id)
+    {
+        $project = Projects::find($project_id);
+
+        return view('projects.milestoneConfirmDestroy', compact('project'));
+    }
+    
+    public function milestoneProjectDestroy($project_id)
+    {
+        if (\Auth::user()->can('delete project')) {
+            // delete milestones
+            Milestone::where('project_id', $project_id)->delete();
+            
+            $projectFile = ProjectFile::select('file_path')->where('project_id', $project_id)->get()->map(
+                function ($file) {
+                    $dir = storage_path('app/public/project_files/');
+                    $file->file = $dir . $file->file;
+
+                    return $file;
+                }
+            );
+            if (!empty($projectFile)) {
+                foreach ($projectFile->pluck('file_path') as $file) {
+                    File::delete($file);
+                }
+            }
+            ProjectFile::where('project_id', $project_id)->delete();
+            
+            // delete tasks, comment, checklist, taskfile
+            $tasks = Task::select('id')->where('project_id', $project_id)->get()->pluck('id');
+            $comment = Comment::whereIn('task_id', $tasks)->delete();
+            $checklist = CheckList::whereIn('task_id', $tasks)->delete();
+            $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
+                function ($file) {
+                    $dir = storage_path('app/public/tasks/');
+                    $file->file = $dir . $file->file;
+                        return $file;
+                }
+            );
+            if (!empty($taskFile)) {
+                foreach ($taskFile->pluck('file') as $file) {
+                    File::delete($file);
+                }
+            }
+            TaskFile::whereIn('task_id', $tasks)->delete();
+            Task::where('project_id', $project_id)->delete();
+            
+            return redirect()->route('projects.index')->with('success', __('Milestones Project successfully deleted.'));
+        }else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function fileUpload($id, Request $request)
@@ -708,6 +763,42 @@ class ProjectsController extends Controller
             );
 
             return $task->toJson();
+        }
+    }
+    
+    public function taskConfirmDestroy($project_id)
+    {
+        $project = Projects::find($project_id);
+
+        return view('projects.taskConfirmDestroy', compact('project'));
+    }
+    
+    public function taskProjectDestroy($project_id)
+    {
+        if (\Auth::user()->can('delete project')) {
+            
+            // delete tasks, comment, checklist, taskfile
+            $tasks = Task::select('id')->where('project_id', $project_id)->get()->pluck('id');
+            $comment = Comment::whereIn('task_id', $tasks)->delete();
+            $checklist = CheckList::whereIn('task_id', $tasks)->delete();
+            $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
+                function ($file) {
+                    $dir = storage_path('app/public/tasks/');
+                    $file->file = $dir . $file->file;
+                        return $file;
+                }
+            );
+            if (!empty($taskFile)) {
+                foreach ($taskFile->pluck('file') as $file) {
+                    File::delete($file);
+                }
+            }
+            TaskFile::whereIn('task_id', $tasks)->delete();
+            Task::where('project_id', $project_id)->delete();
+            
+            return redirect()->route('projects.index')->with('success', __('Task Project successfully deleted.'));
+        }else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
     }
 

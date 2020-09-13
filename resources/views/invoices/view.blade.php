@@ -113,7 +113,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-right mb-10">
-                                <h5>{{ AUth::user()->invoiceNumberFormat($invoice->id) }}</h5>
+                                <!-- <h5>{{ AUth::user()->invoiceNumberFormat($invoice->id) }}</h5> -->
+                                <h5>{{ $invoice->invoice_number }}</h5>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">

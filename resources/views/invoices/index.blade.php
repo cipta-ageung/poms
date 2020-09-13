@@ -52,9 +52,10 @@
                                                         <tr>
 
                                                             <td>
-                                                                <a href="{{ route('invoices.show',$invoice->id) }}" class="btn btn-outline-primary btn-sm">{{ AUth::user()->invoiceNumberFormat($invoice->id) }}</a>
+                                                                <!-- <a href="{{ route('invoices.show',$invoice->id) }}" class="btn btn-outline-primary btn-sm">{{ AUth::user()->invoiceNumberFormat($invoice->id) }}</a> -->
+                                                                <a href="{{ route('invoices.show',$invoice->id) }}" class="btn btn-outline-primary btn-sm">{{ $invoice->invoice_number }}</a>
                                                             </td>
-                                                            <td>{{ $invoice->project->name }}</td>
+                                                            <td>{{ $invoice->project ? $invoice->project->name : '-' }}</td>
                                                             <td>{{ Auth::user()->dateFormat($invoice->issue_date) }}</td>
                                                             <td>{{ Auth::user()->dateFormat($invoice->due_date) }}</td>
                                                             <td>{{ Auth::user()->priceFormat($invoice->getTotal()) }}</td>

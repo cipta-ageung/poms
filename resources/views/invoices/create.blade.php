@@ -57,6 +57,16 @@ $("#close-form-taxes").click(function(){
 
 {{ Form::open(array('url' => 'invoices', 'id' => 'form-invoice-rate')) }}
 <div class="row">
+    <div class="form-group  col-md-12">
+        {{Form::label('invoice_number',__('Invoice Number'))}}
+        {{Form::text('invoice_number',null,array('class'=>'form-control font-style','required'=>'required'))}}
+        @error('invoice_number')
+        <span class="invalid-project_id" role="alert">
+            <strong class="text-danger">{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+    
     <div class="form-group  col-md-6">
         {{ Form::label('project_id', __('Project')) }}
         {{ Form::select('project_id', $projects,null, array('class' => 'form-control font-style','required'=>'required')) }}
@@ -77,7 +87,7 @@ $("#close-form-taxes").click(function(){
             </span>
         @enderror
     </div>
-
+    
     <div class="form-group  col-md-6">
         {{ Form::label('issue_date', __('Issue Date')) }}
         {{ Form::text('issue_date', '', array('class' => 'form-control datepicker','required'=>'required')) }}
@@ -87,7 +97,7 @@ $("#close-form-taxes").click(function(){
             </span>
         @enderror
     </div>
-    
+
     <div class="form-group  col-md-6">
         {{ Form::label('due_date', __('Due Date')) }}
         {{ Form::text('due_date', '', array('class' => 'form-control datepicker','required'=>'required')) }}
@@ -97,7 +107,7 @@ $("#close-form-taxes").click(function(){
             </span>
         @enderror
     </div>
-
+    
     <div class="form-group  col-md-12">
         {{ Form::label('terms', __('Terms')) }}
         {!! Form::textarea('terms', null, ['class'=>'form-control','rows'=>'2']) !!}

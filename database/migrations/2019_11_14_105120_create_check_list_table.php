@@ -15,7 +15,7 @@ class CreateCheckListTable extends Migration
     {
         Schema::create('check_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 100);
+            $table->string('name');
             $table->integer('task_id')->default('0');
             $table->integer('created_by')->default('0');
             $table->integer('status')->default('0');

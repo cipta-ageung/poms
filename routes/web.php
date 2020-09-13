@@ -90,6 +90,8 @@ Route::group(['middleware' => ['auth', 'xss']], function () {
     Route::put('projects/milestone/{id}', 'ProjectsController@milestoneUpdate')->name('project.milestone.update');
     Route::delete('projects/milestone/{id}', 'ProjectsController@milestoneDestroy')->name('project.milestone.destroy');
     Route::get('projects/milestone/{id}/show', 'ProjectsController@milestoneShow')->name('project.milestone.show');
+    Route::get('projects/{id}/milestone/destroy', 'ProjectsController@milestoneConfirmDestroy')->name('project.milestone.confirm.destroy');
+    Route::delete('projects/{id}/milestone/destroy', 'ProjectsController@milestoneProjectDestroy')->name('project.milestone.all.destroy');
 
     Route::post('projects/{id}/file', 'ProjectsController@fileUpload')->name('project.file.upload');
     Route::get('projects/{id}/file/{fid}', 'ProjectsController@fileDownload')->name('projects.file.download');
@@ -103,6 +105,8 @@ Route::group(['middleware' => ['auth', 'xss']], function () {
     Route::delete('projects/taskboard/{id}/delete', 'ProjectsController@taskDestroy')->name('task.destroy');
     Route::get('projects/taskboard/{id}/show', 'ProjectsController@taskShow')->name('task.show');
     Route::post('projects/order', 'ProjectsController@order')->name('taskboard.order');
+    Route::get('projects/{id}/taskboard/destroy', 'ProjectsController@taskConfirmDestroy')->name('project.taskboard.confirm.destroy');
+    Route::delete('projects/{id}/taskboard/destroy', 'ProjectsController@taskProjectDestroy')->name('project.taskboard.all.destroy');
 
     Route::post('projects/{id}/taskboard/{tid}/comment', 'ProjectsController@commentStore')->name('comment.store');
     Route::post('projects/taskboard/{id}/file/{cid}', 'ProjectsController@commentStoreFile')->name('comment.file.store');

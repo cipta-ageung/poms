@@ -88,31 +88,16 @@ $(document).on('click', '#recordButton', function() {
     console.log("recordButton clickeds");
     // e.preventDefault();
 
-    /*
-    	Simple constraints object, for more advanced audio features see
-    	https://addpipe.com/blog/audio-constraints-getusermedia/
-    */
-
     var constraints = {
         audio: true,
         video: false
     }
-
-    /*
-    	Disable the record button until we get a success or fail from getUserMedia()
-	*/
 
     $("#recordButton").prop("disabled", true);
 
     $("#stopButton").prop("disabled", false);
 
     $("#pauseButton").prop("disabled", false);
-
-
-    /*
-    	We're using the standard promise based getUserMedia()
-    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-	*/
 	
 	if(navigator.mediaDevices == undefined){
 	    toastrs('Error', 'please setup your microphone', 'error');
@@ -120,38 +105,25 @@ $(document).on('click', '#recordButton', function() {
 
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
         console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-
-        /*
-        	create an audio context after getUserMedia is called
-        	sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-        	the sampleRate defaults to the one set in your OS for your playback device
-
-        */
+        
         audioContext = new AudioContext();
-
-        //update the format
 
         /*  assign to gumStream for later use  */
         gumStream = stream;
 
         /* use the stream */
         input = audioContext.createMediaStreamSource(stream);
-
-        /*
-        	Create the Recorder object and configure to record mono sound (1 channel)
-        	Recording 2 channels  will double the file size
-        */
+        
         rec = new Recorder(input, {
             numChannels: 1
         })
-
-        //start the recording process
+        
         rec.record()
 
         console.log("Recording started");
 
     }).catch(function(err) {
-        //enable the record button if getUserMedia() fails
+        
         $("#recordButton").prop("disabled", false);
 
         $("#stopButton").prop("disabled", true);
@@ -164,27 +136,26 @@ $(document).on('click', '#recordButton', function() {
 $(document).on('click', '#stopButton', function() {
     console.log("stopButton clicked");
     // e.preventDefault();
-
-    //disable the stop button, enable the record too allow for new recordings
+    
     $("#recordButton").prop("disabled", false);
 
     $("#stopButton").prop("disabled", true);
 
     $("#pauseButton").prop("disabled", true);
 
-    //reset button just in case the recording is stopped while paused
-
+    // reset button just in case the recording is stopped while paused
     $("#pauseButton").html("Pause");
 
-    //tell the recorder to stop the recording
+    // tell the recorder to stop the recording
     rec.stop();
 
-    //stop microphone access
+    // stop microphone access
     gumStream.getAudioTracks()[0].stop();
 
-    //create the wav blob and pass it on to createDownloadLink
+    // create the wav blob and pass it on to createDownloadLink
     rec.exportWAV(createDownloadLink);
 });
+
 $(document).on('click', '#pauseButton', function() {
     console.log("pauseButton clicked rec.recording=", rec.recording);
     if (rec.recording) {
@@ -198,6 +169,7 @@ $(document).on('click', '#pauseButton', function() {
 
     }
 });
+
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -211,20 +183,16 @@ function createDownloadLink(blob) {
     var li = document.createElement('li');
     var link = document.createElement('a');
     var file = document.createElement('input');
-    // var id=$(".recordingsList").data('id');
-    //var recordingsList = document.getElementById('recordingsList');
-
-    //name of .wav file to use during upload and download (without extendion)
     var filename = new Date().toISOString();
 
-    //add controls to the <audio> element
+    // add controls to the <audio> element
     au.controls = true;
     au.src = url;
     li.appendChild(au);
-
+    
     $('#recordingsList').empty();
 
-    //save to disk link
+    // save to disk link
     link.href = url;
     link.download = filename + ".wav"; //download forces the browser to donwload the file using the  filename
     $("#filenamevn").val(filename + ".wav");
@@ -236,18 +204,8 @@ function createDownloadLink(blob) {
     upload.href = "#";
     upload.innerHTML = "Upload";
 
-    //$("#vnote").val(fileObject);
-    //localStorage.setItem('vn', blob);
-    //localStorage.setItem('fn', filename + ".wav");
-
-    //add the new audio element to li
-
-
     //add the filename to the li
     li.appendChild(document.createTextNode(filename + ".wav "))
-
-    //add the save to disk link to li
-
 
     //upload link
     var upload = document.createElement('a');
@@ -287,7 +245,7 @@ function createDownloadLink(blob) {
         },
         error: function(data) {
             console.log(data);
-            // toastrs('Error', '{{ __("Some Thing Is Wrong!")}}', 'error');
+            toastrs('Error', data, 'error')
         }
     });
 
@@ -297,8 +255,6 @@ function createDownloadLink(blob) {
 function myFunction(taskid, cid) {
     console.log(cid);
     $('.inputcom').collapse('hide');
-    // localStorage.setItem('taskidlist', taskid);
-    // localStorage.setItem('cidlist', cid);
     var formData = new FormData();
     formData.append('taskid', taskid);
     formData.append('cid', cid);
@@ -317,11 +273,6 @@ function myFunction(taskid, cid) {
             $('#tabchecklist_list-' + cid).collapse('show');
             document.getElementById("listcomment-"+cid).innerHTML =
                 '<ul class="list-unstyled list-unstyled-border activity-wrap" style="height:auto !important">' + data.list + '</ul>';
-
-            //console.log(document.getElementById("listcomment"));
-            // $("#check-list").prepend(html);
-            // $("#form-checklist input[name=name]").val('');
-            // $("#form-checklist").collapse('toggle');
         },
         error: function(data) {
             // data = data.responseJSON;
@@ -415,8 +366,6 @@ $(document).on('submit', '#form-file', function(e) {
     var vn = localStorage.getItem('file_vn');
     var taskid = localStorage.getItem('taskid');
     var cid = localStorage.getItem('cid');
-    //console.log(vn);
-    //$("#vnote").val($("#file_task").val());
     var formData = new FormData(this);
     formData.append('filename_vn', vn);
     formData.append('taskid', taskid);
@@ -424,7 +373,6 @@ $(document).on('submit', '#form-file', function(e) {
     for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
     }
-    //console.log(vn);
 
     $.ajaxSetup({
         headers: {
@@ -449,15 +397,7 @@ $(document).on('submit', '#form-file', function(e) {
             console.log(data);
             data = data.responseJSON;
             if (data) {
-                // var xhr = new XMLHttpRequest();
-                // xhr.open('POST', $("#form-voice").data('url')+'/'+$("#id"), true); //my url had the ID of the item that the blob corresponded to
-                // xhr.responseType = 'Blob';
-                // xhr.setRequestHeader("x-csrf-token",$('meta[name="csrf-token"]').attr('content')); //if you are doing CSRF stuff
-                // xhr.onload = function(e) { /*irrelevant code*/ };
-                // xhr.send(vn);
-                //console.log(xhr);
                 toastrs('Error', data.message, 'error');
-                //$('#file-error').text(data.errors.file[0]).show();
             } else {
                 toastrs('Error', '{{ __("Some Thing Is Wrong!")}}', 'error');
             }
@@ -552,7 +492,6 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
         // dataType: 'JSON',
         success: function(data) {
             toastrs('Success', '{{ __("Checklist Updated Successfully!")}}', 'success');
-            // console.log(data);
         },
         error: function(data) {
             data = data.responseJSON;
@@ -585,14 +524,21 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
                 <div class="card-header">
                     <div class="d-flex justify-content-between w-100">
                         <h4>{{__('Manage Task')}}</h4>
-                        @can('create task')
+                        
                         <span class="create-btn">
+                            @can('create task')
                             <a href="#" data-url="{{ route('task.create',$project->id) }}" data-ajax-popup="true"
                                 data-title="{{__('Add New Task')}}" class="btn btn-sm btn-warning">
                                 <i class="fa fa-plus"></i> &nbsp;&nbsp; {{__('Create')}}
                             </a>
+                            @endcan
+                            @can('delete task')
+                            <a href="#" data-url="{{ route('project.taskboard.confirm.destroy',$project->id) }}" data-ajax-popup="true" 
+                                data-title="{{__('Delete All')}}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> &nbsp;&nbsp; {{__('Delete')}}
+                            </a>
+                            @endcan
                         </span>
-                        @endcan
                     </div>
                 </div>
                 @php
@@ -629,7 +575,7 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
                                                         <div class="dropdown">
                                                             <a href="" class="btn dropdown-toggle"
                                                                 data-toggle="dropdown">
-                                                                <svg width="18" height="4" viewBox="0 0 18 4"
+                                                                <svg width="10" height="4" viewBox="0 0 18 4"
                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path
                                                                         d="M1.13672 0.804688C1.42318 0.518229 1.7526 0.375 2.125 0.375C2.4974 0.375 2.8125 0.518229 3.07031 0.804688C3.35677 1.0625 3.5 1.3776 3.5 1.75C3.5 2.1224 3.35677 2.45182 3.07031 2.73828C2.8125 2.99609 2.4974 3.125 2.125 3.125C1.7526 3.125 1.42318 2.99609 1.13672 2.73828C0.878906 2.45182 0.75 2.1224 0.75 1.75C0.75 1.3776 0.878906 1.0625 1.13672 0.804688ZM8.01172 0.804688C8.29818 0.518229 8.6276 0.375 9 0.375C9.3724 0.375 9.6875 0.518229 9.94531 0.804688C10.2318 1.0625 10.375 1.3776 10.375 1.75C10.375 2.1224 10.2318 2.45182 9.94531 2.73828C9.6875 2.99609 9.3724 3.125 9 3.125C8.6276 3.125 8.29818 2.99609 8.01172 2.73828C7.75391 2.45182 7.625 2.1224 7.625 1.75C7.625 1.3776 7.75391 1.0625 8.01172 0.804688ZM14.8867 0.804688C15.1732 0.518229 15.5026 0.375 15.875 0.375C16.2474 0.375 16.5625 0.518229 16.8203 0.804688C17.1068 1.0625 17.25 1.3776 17.25 1.75C17.25 2.1224 17.1068 2.45182 16.8203 2.73828C16.5625 2.99609 16.2474 3.125 15.875 3.125C15.5026 3.125 15.1732 2.99609 14.8867 2.73828C14.6289 2.45182 14.5 2.1224 14.5 1.75C14.5 1.3776 14.6289 1.0625 14.8867 0.804688Z"
@@ -637,7 +583,7 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
                                                                 </svg>
                                                             </a>
 
-                                                            <div class="dropdown-menu">
+                                                            <div class="dropdown-menu" style="width:70px;">
                                                                 @can('edit task')
                                                                 <a href="#"
                                                                     data-url="{{ route('task.edit',$task->id) }}"
@@ -664,7 +610,7 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
                                                     </div>
                                                     @endif
 
-                                                    <div class="title mb-1">
+                                                    <div class="title">
                                                         <a href="#" data-url="{{ route('task.show',$task->id) }}"
                                                             data-ajax-popup="true" data-title="{{__('Task Board')}}"
                                                             class="dropdown-item p-0 task-inner-title font-style">{{$task->title}}</a>
@@ -681,7 +627,7 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
                                                             @endif
                                                         </span>
                                                     </div>
-                                                    <div class="meta-info mb-1">
+                                                    <!--<div class="meta-info mb-1">
                                                         <p> {{$task->description}}
                                                         </p>
                                                         <div
@@ -706,6 +652,7 @@ $(document).on("change", "#check-list input[type=checkbox]", function() {
                                                             </a>
                                                         </div>
                                                     </div>
+                                                    -->
                                                 </div>
                                                 @endforeach
                                             </div>

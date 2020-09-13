@@ -15,13 +15,11 @@
         var remain = html.substring(count);
         if (count > 100) {
             html = html.substring(0, 500) + '<a id="read-more-btn"  onclick="read_more()" >Read more</a> <p id="read_more">' + remain + '</p>';
-
         }
         $("#testID").html(html);
         $('#read_more').hide();
 
         function read_more() {
-
             var x = document.getElementById("read_more");
             if (x.style.display === "none") {
                 x.style.display = "block";
@@ -32,30 +30,22 @@
             }
         }
 
-
         var Select2 = (function () {
             var $select = $('.selectric');
-
             function init($this) {
                 var options = {
                     dropdownParent: $this.closest('.modal').length ? $this.closest('.modal') : $(document.body),
-                    // minimumResultsForSearch: $this.data('minimum-results-for-search'),
-                    // templateResult: formatAvatar
                     minimumResultsForSearch: -1
                 };
                 $this.select2(options);
             }
-
             if ($select.length) {
                 $select.each(function () {
                     init($(this));
                 });
             }
         })();
-
-
     </script>
-
 @endpush
 @section('page-title')
     {{__('Project Detail')}}
@@ -307,7 +297,7 @@
                                     <h4>{{__('Milestones')}} ({{count($project->milestones)}})</h4>
                                     @if(\Auth::user()->type!='client' || (\Auth::user()->type=='client' && in_array('create milestone',$perArr)))
                                         <div class="card-header-action">
-                                        <a class="btn btn-primary btn-sm text-white" href="{{ asset(Storage::url('app/public/project_files/Contoh Milestones.xls')) }}">Download Format Excel</a>
+                                            <a class="btn btn-primary btn-sm text-white" href="{{ asset(Storage::url('app/public/project_files/Contoh Milestones.xls')) }}">Download Format Excel</a>
                                             <a href="#" data-url="{{ route('project.milestone',$project->id) }}" data-ajax-popup="true" data-title="{{__('Create New Milestone')}}" class="btn btn-primary btn-sm">
                                                 {{__('Create Milestone')}}
                                             </a>
@@ -347,13 +337,22 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <div class="card-footer text-right">
+                                    @can('create task')
+                                    @if(count($project->milestones)>0)
+                                    <a href="#" data-url="{{ route('project.milestone.confirm.destroy',$project->id) }}" data-ajax-popup="true" data-title="{{__('Delete All')}}" class="btn btn-danger btn-sm">
+                                        {{__('Delete All')}}
+                                    </a>
+                                    @endif
+                                    @endcan
+                                </div>
                             </div>
                         </div>
                     @endif
                     <div class="col-lg-12">
                         <div class="card todo-ui">
                             <div class="card-body">
-                                <form action="#" class="dropzone dropzone-file-area" id="my-dropzone" style="">
+                                <form action="#" enctype="multipart/form-data" class="dropzone dropzone-file-area" id="filedrop" style="">
                                     <h3 class="sbold">{{__('Drop files here or click to upload')}}</h3>
                                 </form>
                             </div>
@@ -406,11 +405,11 @@
         </div>
     </section>
 @endsection
+
 @push('script-page')
     <script>
-
         Dropzone.autoDiscover = false;
-        myDropzone = new Dropzone("#my-dropzone", {
+        myDropzone = new Dropzone("#filedrop", {
             maxFiles: 20,
             maxFilesize: 2,
             parallelUploads: 1,
@@ -419,13 +418,14 @@
             success: function (file, response) {
                 if (response.is_success) {
                     dropzoneBtn(file, response);
+                    file.previewElement.classList.add("dz-success");
+                    toastrs('Success', '{{ __("Add File Successfully!")}}', 'success');
                 } else {
                     myDropzone.removeFile(file);
                     toastrs('Error', response.error, 'error');
                 }
             },
             error: function (file, response) {
-                alert(JSON.stringify(response));
                 myDropzone.removeFile(file);
                 if (response.error) {
                     toastrs('Error', response.error, 'error');
@@ -434,15 +434,22 @@
                 }
             }
         });
+        
         myDropzone.on("sending", function (file, xhr, formData) {
             formData.append("_token", $('meta[name="csrf-token"]').attr('content'));
             formData.append("project_id", {{$project->id}});
+        });
+        
+        myDropzone.on("complete", function(file) {
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
         });
 
         function dropzoneBtn(file, response) {
             var download = document.createElement('a');
             download.setAttribute('href', response.download);
-            download.setAttribute('class', "btn btn-outline-primary btn-sm");
+            download.setAttribute('class', "btn btn-outline-primary btn-sm mr-1");
             download.setAttribute('data-toggle', "tooltip");
             download.setAttribute('data-original-title', "{{__('Download')}}");
             download.innerHTML = "<i class='fas fa-download'></i>";
@@ -466,6 +473,8 @@
                         success: function (response) {
                             if (response.is_success) {
                                 btn.closest('.dz-image-preview').remove();
+                                toastrs('Success', '{{ __("File Remove Successfully!")}}', 'success');
+                                location.reload();
                             } else {
                                 toastrs('Error', response.error, 'error');
                             }
@@ -486,24 +495,18 @@
             html.setAttribute('class', "text-center mt-10");
             html.appendChild(download);
             html.appendChild(del);
-
             file.previewTemplate.appendChild(html);
         }
-
-            @php
-                $files = $project->files;
-
-            @endphp
-            @foreach($files as $file)
-        var mockFile = {name: "{{$file->file_name}}", size: {{filesize(storage_path('app/public/project_files/'.$file->file_path))}} };
-        myDropzone.emit("addedfile", mockFile);
-        {{--myDropzone.emit("thumbnail", mockFile, "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Microsoft_Excel_2013_logo.svg/30px-Microsoft_Excel_2013_logo.svg.png");--}}
-        myDropzone.emit("thumbnail", mockFile, "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Microsoft_Excel_2013_logo.svg/30px-Microsoft_Excel_2013_logo.svg.png");
-        myDropzone.emit("complete", mockFile);
-        dropzoneBtn(mockFile, {download: "{{route('projects.file.download',[$project->id,$file->id])}}", delete: "{{route('projects.file.delete',[$project->id,$file->id])}}"});
+        @php
+            $files = $project->files;
+        @endphp
+        @foreach($files as $file)
+            var mockFile = {name: "{{$file->file_name}}", size: {{filesize(storage_path('app/public/project_files/'.$file->file_path))}} };
+            myDropzone.emit("addedfile", mockFile);
+            dropzoneBtn(mockFile, {download: "{{route('projects.file.download',[$project->id,$file->id])}}", delete: "{{route('projects.file.delete',[$project->id,$file->id])}}"});
+            $(".dz-progress").remove();
+            $('.dropzone .dz-preview.dz-file-preview .dz-image').css({'background':'rgb(173 203 234 / 40%)','border':'1px solid #eee'});
         @endforeach
-
-
     </script>
 @endpush
 

@@ -57,6 +57,16 @@ $("#close-form-taxes").click(function(){
 
 {{ Form::model($invoice, array('route' => array('invoices.update', $invoice->id), 'method' => 'PUT')) }}
 <div class="row">
+    <div class="form-group  col-md-12">
+        {{Form::label('invoice_number',__('Invoice Number'))}}
+        {{Form::text('invoice_number',null,array('class'=>'form-control font-style','required'=>'required'))}}
+        @error('invoice_number')
+        <span class="invalid-project_id" role="alert">
+            <strong class="text-danger">{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+    
     <div class="form-group  col-md-6">
         {{ Form::label('project_id', __('Project')) }}
         {{ Form::select('project_id', $projects,null, array('class' => 'form-control font-style ','required'=>'required')) }}
