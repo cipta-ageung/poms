@@ -103,6 +103,7 @@ class PaymentController extends Controller
         if(\Auth::user()->can('delete payment')) {
             if($payment->created_by == \Auth::user()->creatorId()) {
                 InvoicePayment::where('payment_id',$payment->id)->update(array('payment_id'=>0));
+                $payment->delete();
                 return redirect()->route('payments.index')->with('success',__('Payment successfully deleted.'));
             }else{
                 return redirect()->back()->with('error',__('Permission denied.'));

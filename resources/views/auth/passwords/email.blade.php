@@ -8,11 +8,6 @@ background: linear-gradient(to top, #FFFDE4, #005AA7); /* W3C, IE 10+/ Edge, Fir
             <div class="row">
                 <div class="col-12 pt-4">
                     <div class="changeLanguage float-right mr-1 position-relative">
-                        <select name="language" id="language" class="form-control w-25 position-absolute selectric" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                            @foreach(Utility::languages() as $language)
-                                <option @if($lang = $language) selected @endif value="{{ route('change.langPass',$language) }}">{{Str::upper($language)}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
             </div>
