@@ -25,10 +25,6 @@ class Task extends Model
         return $this->hasOne('App\User', 'id', 'assign_to');
     }
 
-    public function comments()
-    {
-        return $this->hasMany('App\Comment', 'task_id', 'id')->orderBy('id', 'DESC');
-    }
     public function taskVoice()
     {
         return $this->hasMany('App\Voicenote', 'task_id', 'id')->orderBy('id', 'DESC');

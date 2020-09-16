@@ -1,16 +1,17 @@
 "use strict";
 
-$(function () {
+$(function() {
     $(".custom-scroll").niceScroll();
     $(".custom-scroll-horizontal").niceScroll();
     $(".activity-wrap").niceScroll();
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
     $("#dataTable").dataTable({
-        "columnDefs": [
-            {"sortable": false, "targets": [1]}
-        ]
+        "columnDefs": [{
+            "sortable": false,
+            "targets": [1]
+        }]
     })
 });
 
@@ -19,7 +20,7 @@ function toastrs(title, message, status) {
     toastr[status](message, title)
 }
 
-$(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true"], div[data-ajax-popup="true"]', function () {
+$(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true"], div[data-ajax-popup="true"]', function() {
     var title = $(this).data('title');
     var size = ($(this).data('size') == '') ? 'md' : $(this).data('size');
     var url = $(this).data('url');
@@ -27,14 +28,14 @@ $(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true
     $("#commonModal .modal-dialog").addClass('modal-' + size);
     $.ajax({
         url: url,
-        success: function (data) {
+        success: function(data) {
             $('#commonModal .modal-body').html(data);
             $("#commonModal").modal('show');
             taskCheckboxProgres();
             common_bind("#commonModal");
             common_bind_select("#commonModal");
         },
-        error: function (data) {
+        error: function(data) {
             data = data.responseJSON;
             toastrs('Error', data.error, 'error')
         }
@@ -42,8 +43,8 @@ $(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true
 
 });
 
-$(document).on('click', 'a[data-ajax-popup-over="true"], button[data-ajax-popup-over="true"], div[data-ajax-popup-over="true"]', function () {
-    
+$(document).on('click', 'a[data-ajax-popup-over="true"], button[data-ajax-popup-over="true"], div[data-ajax-popup-over="true"]', function() {
+
     var validate = $(this).attr('data-validate');
     var id = '';
     if (validate) {
@@ -59,12 +60,12 @@ $(document).on('click', 'a[data-ajax-popup-over="true"], button[data-ajax-popup-
 
     $.ajax({
         url: url + '?id=' + id,
-        success: function (data) {
+        success: function(data) {
             $('#commonModalOver .modal-body').html(data);
             $("#commonModalOver").modal('show');
             taskCheckboxProgres();
         },
-        error: function (data) {
+        error: function(data) {
             data = data.responseJSON;
             toastrs('Error', data.error, 'error')
         }
@@ -76,14 +77,14 @@ function arrayToJson(form) {
     var data = $(form).serializeArray();
     var indexed_array = {};
 
-    $.map(data, function (n, i) {
+    $.map(data, function(n, i) {
         indexed_array[n['name']] = n['value'];
     });
 
     return indexed_array;
 }
 
-$(document).on("submit", "#commonModalOver form", function (e) {
+$(document).on("submit", "#commonModalOver form", function(e) {
     e.preventDefault();
     var data = arrayToJson($(this));
     data.ajax = true;
@@ -93,7 +94,7 @@ $(document).on("submit", "#commonModalOver form", function (e) {
         url: url,
         data: data,
         type: 'POST',
-        success: function (data) {
+        success: function(data) {
             toastrs('Success', data.success, 'success');
             $(data.target).append('<option value="' + data.record.id + '">' + data.record.name + '</option>');
             $(data.target).val(data.record.id);
@@ -106,7 +107,7 @@ $(document).on("submit", "#commonModalOver form", function (e) {
             });
 
         },
-        error: function (data) {
+        error: function(data) {
             data = data.responseJSON;
             toastrs('Error', data.error, 'error')
         }
@@ -138,56 +139,14 @@ function common_bind_select(selector = "body") {
     }
 }
 
-function taskCheckbox() {
-    
-    var checked = 0;
-    var count = 0;
-    var percentage = 0;
-
-    count = $("#check-list input[type=checkbox]").length;
-    checked = $("#check-list input[type=checkbox]:checked").length;
-    percentage = parseInt(((checked / count) * 100), 10);
-    if (isNaN(percentage)) {
-        percentage = 0;
-    }
-    $(".custom-label").text(percentage + "%");
-    $('#taskProgress').css('width', percentage + '%');
-
-
-    $('#taskProgress').removeClass('bg-warning');
-    $('#taskProgress').removeClass('bg-primary');
-    $('#taskProgress').removeClass('bg-success');
-    $('#taskProgress').removeClass('bg-danger');
-
-    if (percentage <= 15) {
-        $('#taskProgress').addClass('bg-danger');
-    } else if (percentage > 15 && percentage <= 33) {
-        $('#taskProgress').addClass('bg-warning');
-    } else if (percentage > 33 && percentage <= 70) {
-        $('#taskProgress').addClass('bg-primary');
-    } else {
-        $('#taskProgress').addClass('bg-success');
-    }
-}
-
 function taskCheckboxProgres() {
-    
-    var checked = 0;
-    var count = 0;
-    var percentage = 0;
 
     var totalPercentage = 0;
-    $(".taskCheck[data-percentage]").each(function(){
-        if($(this).is(":checked")){
-            var dataPercentage = $(this).data('percentage');
-            totalPercentage = totalPercentage + dataPercentage;
-        }
+    $("#check-list input:checkbox:checked").each(function() {
+        var dataPercentage = $(this).data('percentage');
+        totalPercentage = totalPercentage + dataPercentage;
     });
-    
-    if (isNaN(percentage)) {
-        percentage = 0;
-    }
-    
+
     $(".custom-label").text(totalPercentage + "%");
     $('#taskProgress').css('width', totalPercentage + '%');
 
@@ -207,9 +166,9 @@ function taskCheckboxProgres() {
     }
 }
 
-(function ($, window, i) {
+(function($, window, i) {
     // Bootstrap 4 Modal
-    $.fn.fireModal = function (options) {
+    $.fn.fireModal = function(options) {
         var options = $.extend({
             size: 'modal-md',
             center: false,
@@ -222,16 +181,13 @@ function taskCheckboxProgres() {
             body: '',
             buttons: [],
             autoFocus: true,
-            created: function () {
-            },
-            appended: function () {
-            },
-            onFormSubmit: function () {
-            },
+            created: function() {},
+            appended: function() {},
+            onFormSubmit: function() {},
             modal: {}
         }, options);
 
-        this.each(function () {
+        this.each(function() {
             i++;
             var id = 'fire-modal-' + i,
                 trigger_class = 'trigger--' + id,
@@ -262,16 +218,16 @@ function taskCheckboxProgres() {
                     ((options.closeButton == true) ?
                         '           <button type="button" class="close" data-dismiss="modal" aria-label="Close">  ' +
                         '             <span aria-hidden="true">&times;</span>  ' +
-                        '           </button>  '
-                        : '') +
-                    '         </div>  '
-                    : '') +
+                        '           </button>  ' :
+                        '') +
+                    '         </div>  ' :
+                    '') +
                 '         <div class="modal-body">  ' +
                 '         </div>  ' +
                 (options.buttons.length > 0 ?
                     '         <div class="modal-footer">  ' +
-                    '         </div>  '
-                    : '') +
+                    '         </div>  ' :
+                    '') +
                 '       </div>  ' +
                 '     </div>  ' +
                 '  </div>  ';
@@ -281,7 +237,7 @@ function taskCheckboxProgres() {
 
             // Start creating buttons from 'buttons' option
             var this_button;
-            options.buttons.forEach(function (item) {
+            options.buttons.forEach(function(item) {
                 // get option 'id'
                 let id = "id" in item ? item.id : '';
 
@@ -289,7 +245,7 @@ function taskCheckboxProgres() {
                 this_button = '<button type="' + ("submit" in item && item.submit == true ? 'submit' : 'button') + '" class="' + item.class + '" id="' + id + '">' + item.text + '</button>';
 
                 // add click event to the button
-                this_button = $(this_button).off('click').on("click", function () {
+                this_button = $(this_button).off('click').on("click", function() {
                     // execute function from 'handler' option
                     item.handler.call(this, modal_template);
                 });
@@ -324,7 +280,7 @@ function taskCheckboxProgres() {
                 // if `autoFocus` option is true
                 if (options.autoFocus) {
                     // when modal is shown
-                    $(modal_template).on('shown.bs.modal', function () {
+                    $(modal_template).on('shown.bs.modal', function() {
                         // if type of `autoFocus` option is `boolean`
                         if (typeof options.autoFocus == 'boolean')
                             modal_form.find('input:eq(0)').focus(); // the first input element will be focused
@@ -336,10 +292,10 @@ function taskCheckboxProgres() {
 
                 // form object
                 let form_object = {
-                    startProgress: function () {
+                    startProgress: function() {
                         modal_template.addClass('modal-progress');
                     },
-                    stopProgress: function () {
+                    stopProgress: function() {
                         modal_template.removeClass('modal-progress');
                     }
                 };
@@ -348,12 +304,12 @@ function taskCheckboxProgres() {
                 if (!modal_form.find('button').length) $(modal_form).append('<button class="d-none" id="' + id + '-submit"></button>');
 
                 // add click event
-                form_submit_btn.click(function () {
+                form_submit_btn.click(function() {
                     modal_form.submit();
                 });
 
                 // add submit event
-                modal_form.submit(function (e) {
+                modal_form.submit(function(e) {
                     // start form progress
                     form_object.startProgress();
 
@@ -362,7 +318,7 @@ function taskCheckboxProgres() {
                 });
             }
 
-            $(document).on("click", '.' + trigger_class, function () {
+            $(document).on("click", '.' + trigger_class, function() {
                 $('#' + id).modal(options.modal);
 
                 return false;
@@ -371,19 +327,18 @@ function taskCheckboxProgres() {
     }
 
     // Bootstrap Modal Destroyer
-    $.destroyModal = function (modal) {
+    $.destroyModal = function(modal) {
         modal.modal('hide');
-        modal.on('hidden.bs.modal', function () {
-        });
+        modal.on('hidden.bs.modal', function() {});
     }
 })(jQuery, this, 0);
 
-var Charts = (function () {
+var Charts = (function() {
 
     // Variable
 
     var $toggle = $('[data-toggle="chart"]');
-    var mode = 'light';//(themeMode) ? themeMode : 'light';
+    var mode = 'light'; //(themeMode) ? themeMode : 'light';
     var fonts = {
         base: 'Open Sans'
     }
@@ -471,11 +426,11 @@ var Charts = (function () {
                 },
                 doughnut: {
                     cutoutPercentage: 83,
-                    legendCallback: function (chart) {
+                    legendCallback: function(chart) {
                         var data = chart.data;
                         var content = '';
 
-                        data.labels.forEach(function (label, index) {
+                        data.labels.forEach(function(label, index) {
                             var bgColor = data.datasets[0].backgroundColor[index];
 
                             content += '<span class="chart-legend-item">';
@@ -507,7 +462,7 @@ var Charts = (function () {
             ticks: {
                 beginAtZero: true,
                 padding: 10,
-                callback: function (value) {
+                callback: function(value) {
                     if (!(value % 10)) {
                         return value
                     }
@@ -547,7 +502,7 @@ var Charts = (function () {
     function pushOptions(parent, options) {
         for (var item in options) {
             if (Array.isArray(options[item])) {
-                options[item].forEach(function (data) {
+                options[item].forEach(function(data) {
                     parent[item].push(data);
                 });
             } else {
@@ -560,7 +515,7 @@ var Charts = (function () {
     function popOptions(parent, options) {
         for (var item in options) {
             if (Array.isArray(options[item])) {
-                options[item].forEach(function (data) {
+                options[item].forEach(function(data) {
                     parent[item].pop();
                 });
             } else {
@@ -616,14 +571,14 @@ var Charts = (function () {
             var suffix = elem.data('suffix') ? elem.data('suffix') : '';
 
             // Update ticks
-            $chart.options.scales.yAxes[0].ticks.callback = function (value) {
+            $chart.options.scales.yAxes[0].ticks.callback = function(value) {
                 if (!(value % 10)) {
                     return prefix + value + suffix;
                 }
             }
 
             // Update tooltips
-            $chart.options.tooltips.callbacks.label = function (item, data) {
+            $chart.options.tooltips.callbacks.label = function(item, data) {
                 var label = data.datasets[item.datasetIndex].label || '';
                 var yLabel = item.yLabel;
                 var content = '';
@@ -639,9 +594,6 @@ var Charts = (function () {
         }
     }
 
-
-    // Events
-
     // Parse global options
     if (window.Chart) {
         parseOptions(Chart, chartOptions());
@@ -649,14 +601,14 @@ var Charts = (function () {
 
     // Toggle options
     $toggle.on({
-        'change': function () {
+        'change': function() {
             var $this = $(this);
 
             if ($this.is('[data-add]')) {
                 toggleOptions($this);
             }
         },
-        'click': function () {
+        'click': function() {
             var $this = $(this);
 
             if ($this.is('[data-update]')) {
@@ -664,10 +616,6 @@ var Charts = (function () {
             }
         }
     });
-
-
-    // Return
-
     return {
         colors: colors,
         fonts: fonts,
@@ -675,3 +623,76 @@ var Charts = (function () {
     };
 
 })();
+
+// checklist form javascript
+$(document).on('submit', '#form-checklist', function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: $("#form-checklist").data('action'),
+        type: 'POST',
+        data: new FormData(this),
+        dataType: 'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(data) {
+            toastrs('Success', 'Checklist Added Successfully!', 'success');
+            $('.modal-body').load(data.responseUrl, function() {
+                $('#commonModal').modal({
+                    show: true
+                });
+                taskCheckboxProgres();
+            });
+        },
+    });
+});
+
+$(document).on("click", "#delete-checklist", function(e) {
+    e.preventDefault();
+    if (confirm('Are You Sure ?')) {
+        $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'DELETE',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'JSON',
+            cache: false,
+            success: function(data) {
+                toastrs('Success', 'Checklist Deleted Successfully!', 'success');
+                $('.modal-body').load(data.responseUrl, function() {
+                    $('#commonModal').modal({
+                        show: true
+                    });
+                    taskCheckboxProgres();
+                });
+            },
+            error: function(data) {
+                data = data.responseJSON;
+                if (data.message) {
+                    toastrs('Error', data.message, 'error');
+                } else {
+                    toastrs('Error', 'Some Thing Is Wrong!', 'error');
+                }
+            }
+        });
+    }
+});
+
+$(document).on("change", "#check-list input[type=checkbox]", function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: $(this).attr('data-url'),
+        type: 'PUT',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(data) {
+            toastrs('Success', 'Checklist Updated Successfully!', 'success');
+        },
+        error: function(data) {
+            toastrs('Error', 'Some Thing Is Wrong!', 'error');
+        }
+    });
+    taskCheckboxProgres();
+});

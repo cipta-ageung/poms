@@ -55,7 +55,9 @@ class Projects extends Model
 
     public function countTaskComments()
     {
-        return Task::join('comments', 'comments.task_id', '=', 'tasks.id')->where('project_id', '=', $this->id)->count();
+        return Task::leftjoin('check_lists', 'check_lists.task_id', '=', 'tasks.id')
+            ->rightjoin('checklist_comments', 'checklist_comments.checklist_id', '=', 'check_lists.id')
+            ->where('project_id', '=', $this->id)->count();
     }
 
     public function project_expenses()
@@ -100,7 +102,6 @@ class Projects extends Model
 
     public static function getProjectStatus()
     {
-
         $projectData = [];
         if(\Auth::user()->type == 'company')
         {

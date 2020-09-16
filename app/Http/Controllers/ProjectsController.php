@@ -10,7 +10,6 @@ use App\BugStatus;
 use App\CheckList;
 use App\Client;
 use App\ClientPermission;
-use App\Comment;
 use App\Invoice;
 use App\Labels;
 use App\Leads;
@@ -23,13 +22,13 @@ use App\TaskFile;
 use App\Timesheet;
 use App\User;
 use App\Userprojects;
-use App\Voicenote;
 use Auth;
 use File;
 use Illuminate\Http\Request;
 use Storage;
 use App\Imports\MilestoneImport;
 use Excel;
+use App\Http\Controllers\ChecklistCommentsController;
 
 class ProjectsController extends Controller
 {
@@ -267,8 +266,10 @@ class ProjectsController extends Controller
 
                 Invoice::where('project_id', $id)->update(array('project_id' => 0));
                 $tasks = Task::select('id')->where('project_id', $id)->get()->pluck('id');
-                $comment = Comment::whereIn('task_id', $tasks)->delete();
-                $checklist = CheckList::whereIn('task_id', $tasks)->delete();
+                $checklists = CheckList::whereIn('task_id', $tasks)->get();
+                foreach($checklists as $checklist) {
+                    $this->checklistDestroy(new Request(), $tasks, $checklist->id);
+                }
 
                 $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
                     function ($file) {
@@ -475,8 +476,11 @@ class ProjectsController extends Controller
             
             // delete tasks, comment, checklist, taskfile
             $tasks = Task::select('id')->where('project_id', $project_id)->get()->pluck('id');
-            $comment = Comment::whereIn('task_id', $tasks)->delete();
-            $checklist = CheckList::whereIn('task_id', $tasks)->delete();
+            $checklists = CheckList::whereIn('task_id', $tasks)->get();
+            foreach($checklists as $checklist) {
+                $this->checklistDestroy(new Request(), $tasks, $checklist->id);
+            }
+
             $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
                 function ($file) {
                     $dir = storage_path('app/public/tasks/');
@@ -779,8 +783,10 @@ class ProjectsController extends Controller
             
             // delete tasks, comment, checklist, taskfile
             $tasks = Task::select('id')->where('project_id', $project_id)->get()->pluck('id');
-            $comment = Comment::whereIn('task_id', $tasks)->delete();
-            $checklist = CheckList::whereIn('task_id', $tasks)->delete();
+            $checklists = CheckList::whereIn('task_id', $tasks)->get();
+            foreach($checklists as $checklist) {
+                $this->checklistDestroy(new Request(), $tasks, $checklist->id);
+            }
             $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
                 function ($file) {
                     $dir = storage_path('app/public/tasks/');
@@ -833,29 +839,6 @@ class ProjectsController extends Controller
         return view('projects.taskShow', compact('task', 'perArr', 'maxPercentage'));
     }
 
-    public function commentStore(Request $request, $project_id, $task_id)
-    {
-
-        $post = [];
-        $post['task_id'] = $task_id;
-        $post['comment'] = $request->comment;
-        $post['created_by'] = \Auth::user()->authId();
-        $post['user_type'] = \Auth::user()->type;
-        $comment = Comment::create($post);
-
-        $comment->deleteUrl = route('comment.destroy', [$comment->id]);
-
-        return $comment->toJson();
-    }
-
-    public function commentDestroy($comment_id)
-    {
-
-        $comment = Comment::find($comment_id);
-        $comment->delete();
-
-        return "true";
-    }
     public function file_get_contents_curl($url)
     {
         $ch = curl_init();
@@ -869,130 +852,6 @@ class ProjectsController extends Controller
         $data = curl_exec($ch);
         curl_close($ch);
         return $data;
-    }
-
-    public function commentStoreFile(Request $request)
-    {
-
-
-        if ($request->hasFile('file_task')) {
-            $file = $request->file('file_task');
-            $fileName = $request->taskid . time() . "_" . $file->getClientOriginalName();
-            $size = $file->getSize();
-            $destinationPath = public_path('/tasks');
-            $file->move($destinationPath, $fileName);
-            $post['task_id'] = $request->taskid;
-            $post['file'] = $fileName;
-            $post['checklist_id'] = $request->cid;
-            $post['name'] = $file->getClientOriginalName();
-            $post['extension'] = "." . $file->getClientOriginalExtension();
-            $post['file_size'] = round(($size / 1024) / 1024, 2) . ' MB';
-            $post['created_by'] = \Auth::user()->authId();
-            $post['user_type'] = \Auth::user()->type;
-
-            $save = $TaskFile = TaskFile::create($post);
-        }
-
-       
-        if ($request->comment!=null) {
-            $post['checklist_id'] = $request->cid;
-            $post['comment'] = $request->comment;
-            $post['created_by'] = \Auth::user()->authId();
-            $post['user_type'] = \Auth::user()->type;
-            $save2 = $TaskFile = Comment::create($post);
-        }
-            if ($request->filename_vn!=null) {
-
-                //$fileNamevn = 'asd';
-                //$request->file->storeAs('public/audio', 'blob:http://localhost:8000/686b476f-6a24-2847-bf5c-32d626cb21f1');
-                //Storage::disk('public')->put('audio/' . $fileNamevn, $blobInput);
-                $post['task_id'] = $request->taskid;
-                $post['filename'] = $request->filename_vn;
-                $post['checklist_id'] = $request->cid;
-                $post['voicenote'] = $request->filename_vn;
-                $post['created_by'] = \Auth::user()->authId();
-                $post['user_type'] = \Auth::user()->type;
-
-                $TaskVoice = Voicenote::create($post);
-            
-        }
-        //$data = $blobInput;
-        //    $TaskFile->deleteUrl = route('comment.file.destroy', [$TaskFile->id]);
-
-        return "true";
-    }
-    public function checkListRead(Request $request)
-    {
-
-        $dataProject = CheckList::leftJoin('task_files', 'check_lists.id', '=', 'task_files.checklist_id')
-            ->leftJoin('comments', 'check_lists.id', '=', 'comments.checklist_id')
-            ->leftJoin('voicenotes', 'check_lists.id', '=', 'voicenotes.checklist_id')
-            ->select('comments.comment', 'task_files.file', 'voicenotes.voicenote', 'check_lists.id')
-            ->where('check_lists.id', $request->cid)->get();
-      
-        $list = '';
-        foreach ($dataProject as $value) {
-           
-            $audio = "audio/" . $value->voicenote;
-           
-            $file = "tasks/" . $value->file;
-            if ($value->file) {
-                $linkdownload = '<span>File : "' . $value->file . '"</span> &nbsp;<a class="btn btn-info default mb-1 text-light" href="' . $file . '"><i class="iconsmind-Download"></i> Download</a><br>';
-            } else {
-                $linkdownload = "<br>";
-            }
-            if($value->voicenote!="null"&&!empty($value->voicenote)&&$value->voicenote!=""){
-                $vn='<audio controls>
-                <source src="' . $audio . '" type="audio"></audio>';
-                //  $vn="";
-            }else{
-                $vn="";
-            }
-            $list .= '<li><label><b>' . $value->comment . '</b></label> ' . $linkdownload . ' ' . $vn . '</li><hr>';
-          
-        }
-        $datas['list'] = $list;
-        return $datas;
-
-    }
-    public function commentDestroyFile(Request $request, $file_id)
-    {
-
-        $commentFile = TaskFile::find($file_id);
-        $path = storage_path('public/tasks/' . $commentFile->voicenote);
-        if (file_exists($path)) {
-            \File::delete($path);
-        }
-        $commentFile->delete();
-
-        return "true";
-    }
-    public function voicenoteStoreFile(Request $request)
-    {
-
-        $blobInput = $request->file('voicenote');
-        $fileName = $request->taskid . time() . "_" . $request->filename;
-        //save the wav file to 'storage/app/audio' path with fileanme test.wav
-        Storage::disk('public')->put('audio/' . $fileName . '.wav', file_get_contents($blobInput));
-
-        return json_encode(
-            [
-                'filename' => $fileName . '.wav',
-            ]
-        );
-    }
-
-    public function voicenoteDestroyFile(Request $request, $file_id)
-    {
-
-        $commentFile = Voicenote::find($file_id);
-        $path = storage_path('public/tasks/' . $commentFile->file);
-        if (file_exists($path)) {
-            \File::delete($path);
-        }
-        $commentFile->delete();
-
-        return "true";
     }
 
     public function checkListStore(Request $request, $task_id)
@@ -1033,13 +892,14 @@ class ProjectsController extends Controller
 
         $checklist = CheckList::find($checklist_id);
         $checklist->delete();
-
+        $checklistCommentCtrl = new ChecklistCommentsController();
+        $checklistCommentCtrl->destroyByChecklistId($request, $checklist_id);
         $checklist->responseUrl = route(
             'task.show', [
                 $checklist->task_id,
             ]
         );
-
+        
         return $checklist->toJson();
     }
 

@@ -108,15 +108,12 @@ Route::group(['middleware' => ['auth', 'xss']], function () {
     Route::get('projects/{id}/taskboard/destroy', 'ProjectsController@taskConfirmDestroy')->name('project.taskboard.confirm.destroy');
     Route::delete('projects/{id}/taskboard/destroy', 'ProjectsController@taskProjectDestroy')->name('project.taskboard.all.destroy');
 
-    Route::post('projects/{id}/taskboard/{tid}/comment', 'ProjectsController@commentStore')->name('comment.store');
-    Route::post('projects/taskboard/{id}/file/{cid}', 'ProjectsController@commentStoreFile')->name('comment.file.store');
-    Route::post('projects/taskboard/comment', 'ProjectsController@voicenoteStoreFile')->name('comment.voicenote.store');
-
-    Route::delete('projects/taskboard/comment/{id}', 'ProjectsController@commentDestroy')->name('comment.destroy');
-    Route::delete('projects/taskboard/file/{id}', 'ProjectsController@commentDestroyFile')->name('comment.file.destroy');
+    Route::post('projects/taskboard/checklist/{id}/comment', 'ChecklistCommentsController@store')->name('checklistcomment.store');
+    Route::get('projects/taskboard/checklist/{id}/comment/show', 'ChecklistCommentsController@index')->name('checklistcomment.index');
+    Route::get('projects/taskboard/checklist/{id}/comment', 'ChecklistCommentsController@create')->name('checklistcomment.create');
+    Route::delete('projects/taskboard/checklist/{id}/destroy', 'ChecklistCommentsController@destroy')->name('checklistcomment.destroy');
 
     Route::post('projects/taskboard/{id}/checklist/store', 'ProjectsController@checkListStore')->name('task.checklist.store');
-    Route::post('projects/taskboard/checklist/read', 'ProjectsController@checkListRead')->name('task.checklist.read');
     Route::put('projects/taskboard/{id}/checklist/{cid}/update', 'ProjectsController@checklistUpdate')->name('task.checklist.update');
     Route::delete('projects/taskboard/{id}/checklist/{cid}', 'ProjectsController@checklistDestroy')->name('task.checklist.destroy');
 

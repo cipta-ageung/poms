@@ -256,59 +256,6 @@ $('.inputcom').on('hidden.bs.collapse', function () {
     $('.listcom').collapse('hide');
 });
 
-function myFunction(taskid, cid) {
-    console.log(cid);
-
-    // localStorage.setItem('taskidlist', taskid);
-    // localStorage.setItem('cidlist', cid);
-    var formData = new FormData();
-    formData.append('taskid', taskid);
-    formData.append('cid', cid);
-    for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-    $('#tabchecklist-' + cid).collapse('hide');
-    $('.listcom').collapse('hide');
-    $.ajax({
-        url: "{{route('task.checklist.read')}}",
-        type: 'POST',
-        data: formData,
-        dataType: 'JSON',
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function(data) {
-            // toastrs('Success', '{{ __("Checklist Added Successfully!")}}', 'success');
-            console.log(data);
-
-            $('#tabchecklist_list-' + cid).collapse('show');
-            document.getElementById("listcomment-"+cid).innerHTML =
-                '<ul class="list-unstyled list-unstyled-border activity-wrap" style="height:auto !important">' + data.list + '</ul>';
-            console.log(document.getElementById("listcomment-"+cid));
-            // $("#check-list").prepend(html);
-            // $("#form-checklist input[name=name]").val('');
-            // $("#form-checklist").collapse('toggle');
-        },
-        error: function(data) {
-            // data = data.responseJSON;
-            toastrs('Error', data, 'error')
-        }
-    });
-
-}
-
-function myFunction1(taskid, cid) {
-    console.log(cid);
-    // $('.listcom').collapse('hide');
-    $('.inputcom').collapse('hide');
-    
-    $('#tabchecklist_list-' + cid).collapse('hide');
-    $('#tabchecklist-' + cid).collapse('show');
-    
-    localStorage.setItem('taskid', taskid);
-    localStorage.setItem('cid', cid);
-}
-
 $(document).on('click', '.fc-day-grid-event', function(e) {
     if (!$(this).hasClass('deal')) {
         e.preventDefault();
@@ -408,35 +355,6 @@ $(document).on("click", ".delete-comment", function() {
         });
     }
 });
-// $(document).on('shown.bs.collapse', '.listcom', function(e) {
-//     console.log("Opened");
-
-
-
-//     $.ajax({
-//         url: $("#listtab").data('url'),
-//         type: 'POST',
-//         data: new FormData(this),
-//         dataType: 'JSON',
-//         contentType: false,
-//         cache: false,
-//         processData: false,
-//         success: function(data) {
-//             // toastrs('Success', '{{ __("Checklist Added Successfully!")}}', 'success');
-
-
-
-//             // $("#check-list").prepend(html);
-//             // $("#form-checklist input[name=name]").val('');
-//             // $("#form-checklist").collapse('toggle');
-//         }
-//     });
-
-// });
-// $(document).on('shown.bs.collapse', '.inputcom', function(e) {
-
-// });
-
 
 $(document).on('submit', '#form-file', function(e) {
     e.preventDefault();
@@ -444,8 +362,6 @@ $(document).on('submit', '#form-file', function(e) {
     var vn = localStorage.getItem('file_vn');
     var taskid = localStorage.getItem('taskid');
     var cid = localStorage.getItem('cid');
-    //console.log(vn);
-    //$("#vnote").val($("#file_task").val());
     var formData = new FormData(this);
     formData.append('filename_vn', vn);
     formData.append('taskid', taskid);
@@ -453,7 +369,6 @@ $(document).on('submit', '#form-file', function(e) {
     for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
     }
-    //console.log(vn);
 
     $.ajaxSetup({
         headers: {
@@ -478,15 +393,7 @@ $(document).on('submit', '#form-file', function(e) {
             console.log(data);
             data = data.responseJSON;
             if (data) {
-                // var xhr = new XMLHttpRequest();
-                // xhr.open('POST', $("#form-voice").data('url')+'/'+$("#id"), true); //my url had the ID of the item that the blob corresponded to
-                // xhr.responseType = 'Blob';
-                // xhr.setRequestHeader("x-csrf-token",$('meta[name="csrf-token"]').attr('content')); //if you are doing CSRF stuff
-                // xhr.onload = function(e) { /*irrelevant code*/ };
-                // xhr.send(vn);
-                //console.log(xhr);
                 toastrs('Error', data.message, 'error');
-                //$('#file-error').text(data.errors.file[0]).show();
             } else {
                 toastrs('Error', '{{ __("Some Thing Is Wrong!")}}', 'error');
             }
@@ -521,75 +428,6 @@ $(document).on("click", ".delete-comment-file", function() {
     }
 });
 
-$(document).on('submit', '#form-checklist', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: $("#form-checklist").data('action'),
-        type: 'POST',
-        data: new FormData(this),
-        dataType: 'JSON',
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function(data) {
-            toastrs('Success', '{{ __("Checklist Added Successfully!")}}', 'success');
-            $('.modal-body').load(data.responseUrl,function(){
-                $('#commonModal').modal({show:true});
-            });
-        },
-    });
-});
-
-$(document).on("click", ".delete-checklist", function() {
-    if (confirm('Are You Sure ?')) {
-        var btn = $(this);
-        $.ajax({
-            url: $(this).attr('data-url'),
-            type: 'DELETE',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'JSON',
-            success: function(data) {
-                toastrs('Success', '{{ __("Checklist Deleted Successfully!")}}', 'success');
-                btn.closest('.media').remove();
-            },
-            error: function(data) {
-                data = data.responseJSON;
-                if (data.message) {
-                    toastrs('Error', data.message, 'error');
-                } else {
-                    toastrs('Error', '{{ __("Some Thing Is Wrong!")}}', 'error');
-                }
-            }
-        });
-    }
-});
-
-var checked = 0;
-var count = 0;
-var percentage = 0;
-
-$(document).on("change", "#check-list input[type=checkbox]", function() {
-    $.ajax({
-        url: $(this).attr('data-url'),
-        type: 'PUT',
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content')
-        },
-        // dataType: 'JSON',
-        success: function(data) {
-            toastrs('Success', '{{ __("Checklist Updated Successfully!")}}', 'success');
-            // console.log(data);
-        },
-        error: function(data) {
-            data = data.responseJSON;
-            toastrs('Error', '{{ __("Some Thing Is Wrong!")}}', 'error');
-        }
-    });
-    taskCheckboxProgres();
-});
 var local_lang = '{{App::getLocale()}}';
 </script>
 <script src="{{asset('assets/js/page/modules-calendar.js')}}"></script>

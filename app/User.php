@@ -649,7 +649,6 @@ class User extends Authenticatable
     public function destroyUserTaskAllInfo($user_id)
     {
         CheckList::where('created_by', '=', $user_id)->delete();
-        Comment::where('created_by', '=', $user_id)->delete();
         TaskFile::where('created_by', '=', $user_id)->delete();
     }
 

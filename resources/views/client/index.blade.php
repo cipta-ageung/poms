@@ -22,7 +22,7 @@
                             <h4>{{__('Manage Client')}}</h4>
                             @can('create client')
                                 <a href="#" data-url="{{ route('clients.create') }}" data-ajax-popup="true" data-title="{{__('Create New Client')}}" class="btn btn-sm btn-warning">
-                                    <i class="fa fa-plus"></i> {{__('Create')}}
+                                    <em class="fa fa-plus"></em> {{__('Create')}}
                                 </a>
                             @endcan
                         </div>
@@ -36,7 +36,7 @@
                                             <div class="more-action">
                                                 @if($client->is_active==1)
                                                     <div class="dropdown">
-                                                        @if($client->is_active!=1) <i class="fas fa-lock mr-1"></i>@endif
+                                                        @if($client->is_active!=1) <em class="fas fa-lock mr-1"></em>@endif
                                                         <a href="" class="btn dropdown-toggle" data-toggle="dropdown">
                                                             <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path
@@ -58,12 +58,12 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <i class="fas fa-lock"></i>
+                                                    <em class="fas fa-lock"></em>
                                                 @endif
                                             </div>
 
                                             <div class="contact-img">
-                                                <img src="{{(!empty($client->avatar))? asset(Storage::url("avatar/".$client->avatar)): asset(Storage::url("avatar/avatar.png"))}}" class="rounded-circle">
+                                                <img alt="voicenote" src="{{(!empty($client->avatar))? asset(Storage::url("avatar/".$client->avatar)): asset(Storage::url("avatar/avatar.png"))}}" class="rounded-circle">
 
                                             </div>
                                             <div class="main-info mb-4">
@@ -79,15 +79,15 @@
                                             <div class="btn-wrap">
 
                                                 <button class="btn" title="Project">
-                                                    <i class="fas fa-briefcase"></i>
+                                                    <em class="fas fa-briefcase"></em>
                                                     <span class="pl-2">{{$client->client_project()}} </span>
                                                 </button>
                                                 <button class="btn" title="Project Budget">
-                                                    <i class="fas fa-file-invoice-dollar"></i>
+                                                    <em class="fas fa-file-invoice-dollar"></em>
                                                     <span class="pl-2">{{\Auth::user()->priceFormat($client ->client_project_budget())}}</span>
                                                 </button>
                                                 <button class="btn" title="Lead">
-                                                    <i class="fas fa-tasks"></i>
+                                                    <em class="fas fa-tasks"></em>
                                                     <span class="pl-2">{{$client->client_lead()}}</span>
                                                 </button>
 
