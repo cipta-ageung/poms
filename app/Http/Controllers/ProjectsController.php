@@ -28,6 +28,7 @@ use Storage;
 use App\Imports\MilestoneImport;
 use Excel;
 use App\Http\Controllers\ChecklistCommentsController;
+use App\Http\Controllers\InvoiceController;
 
 class ProjectsController extends Controller
 {
@@ -221,8 +222,6 @@ class ProjectsController extends Controller
                 );
 
                 if ($validator->fails()) {
-                    $messages = $validator->getMessageBag();
-
                     return redirect()->back()->with('error', 'Project Status is required.');
                 }
 
@@ -245,7 +244,11 @@ class ProjectsController extends Controller
             if ($project->created_by == \Auth::user()->creatorId()) {
                 Userprojects::where('project_id', $id)->delete();
                 ActivityLog::where('project_id', $id)->delete();
-                Invoice::where('project_id', $id)->update(array('project_id' => 0));
+                $invoices = Invoice::where('project_id', $id)->get();
+                foreach($invoices as $invoice){
+                    $invoiceController = new InvoiceController();
+                    $invoiceController->destroy($invoice);
+                }
                 $this->milestoneProjectDestroy($id);
                 $project->delete();
 
