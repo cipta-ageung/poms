@@ -240,41 +240,15 @@ class ProjectsController extends Controller
 
     public function destroy($id)
     {
-
         if (\Auth::user()->can('delete project')) {
             $project = Projects::findOrfail($id);
             if ($project->created_by == \Auth::user()->creatorId()) {
-                Milestone::where('project_id', $id)->delete();
                 Userprojects::where('project_id', $id)->delete();
                 ActivityLog::where('project_id', $id)->delete();
-
-                $projectFile = ProjectFile::select('file_path')->where('project_id', $id)->get()->map(
-                    function ($file) {
-                        $dir = storage_path('app/public/project_files/');
-                        $file->file = $dir . $file->file;
-
-                        return $file;
-                    }
-                );
-                if (!empty($projectFile)) {
-                    foreach ($projectFile->pluck('file_path') as $file) {
-                        File::delete($file);
-                    }
-                }
-                ProjectFile::where('project_id', $id)->delete();
-
                 Invoice::where('project_id', $id)->update(array('project_id' => 0));
-                $tasks = Task::select('id')->where('project_id', $id)->get()->pluck('id');
-                $checklists = CheckList::whereIn('task_id', $tasks)->get();
-                foreach($checklists as $checklist) {
-                    $this->checklistDestroy(new Request(), $tasks, $checklist->id);
-                }
-
-                Task::where('project_id', $id)->delete();
-
-                // delete project after all deleted
+                $this->milestoneProjectDestroy($id);
                 $project->delete();
-                
+
                 return redirect()->route('projects.index')->with('success', __('Project successfully deleted.'));
             } else {
                 return redirect()->back()->with('error', __('Permission denied.'));
@@ -442,22 +416,16 @@ class ProjectsController extends Controller
         if (\Auth::user()->can('delete project')) {
             // delete milestones
             Milestone::where('project_id', $project_id)->delete();
-            
-            $projectFile = ProjectFile::select('file_path')->where('project_id', $project_id)->get()->map(
-                function ($file) {
-                    $dir = storage_path('app/public/project_files/');
-                    $file->file = $dir . $file->file;
 
-                    return $file;
+            // delete project file
+            $projectFiles = ProjectFile::where('project_id', $project_id)->get();
+            foreach ($projectFiles as $projectFile) {
+                if (Storage::disk('public')->exists('project_files/'. $projectFile->file_path)) {
+                    Storage::disk('public')->delete('project_files/'.$projectFile->file_path);
                 }
-            );
-            if (!empty($projectFile)) {
-                foreach ($projectFile->pluck('file_path') as $file) {
-                    File::delete($file);
-                }
+                $projectFile->delete();
             }
-            ProjectFile::where('project_id', $project_id)->delete();
-            
+
             // delete tasks, comment, checklist, checklist file
             $tasks = Task::select('id')->where('project_id', $project_id)->get()->pluck('id');
             $checklists = CheckList::whereIn('task_id', $tasks)->get();
@@ -670,6 +638,12 @@ class ProjectsController extends Controller
                     'milestone_id' => 'required',
                 ]
             );
+
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+
+                return redirect()->route('task.show', $project_id)->with('error', $messages->first());
+            }
         }
 
         $task = Task::find($task_id);
