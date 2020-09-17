@@ -140,6 +140,10 @@ class Projects extends Model
         return $projectData;
     }
 
+    public function task_progress($project_id){
+        return Task::where('project_id', $project_id)->where('stage', 4)->sum('bobot');
+    }
+
     public static $status = [
         'incomplete' => 'Incomplete',
         'complete' => 'Complete',

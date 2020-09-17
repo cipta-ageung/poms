@@ -1,14 +1,20 @@
 <div class="row">
-    <div class="col-12 col-md-6 col-lg-6">
+    <div class="col-12 col-md-4 col-lg-4">
         <div class="form-group">
             <label>{{ __('Title')}} :</label>
             <p class="m-0 p-0">{{$task->title}}</p>
         </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-6">
+    <div class="col-12 col-md-4 col-lg-4">
         <div class="form-group">
             <label>{{ __('Priority')}} :</label>
             <p class="m-0 p-0">{{$task->priority}}</p>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-4">
+        <div class="form-group">
+            <label>{{ __('Bobot')}} :</label>
+            <p class="m-0 p-0">{{$task->bobot}} %</p>
         </div>
     </div>
 </div>

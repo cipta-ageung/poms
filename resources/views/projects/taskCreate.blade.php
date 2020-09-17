@@ -37,8 +37,8 @@ $("#close-form-milestone").click(function(){
         {{ Form::text('title', '', array('class' => 'form-control','required'=>'required')) }}
         @error('title')
         <span class="invalid-title" role="alert">
-        <strong class="text-danger">{{ $message }}</strong>
-    </span>
+            <strong class="text-danger">{{ $message }}</strong>
+        </span>
         @enderror
     </div>
     <div class="form-group  col-md-6">
@@ -136,6 +136,16 @@ $("#close-form-milestone").click(function(){
         <span class="invalid-priority" role="alert">
                 <strong class="text-danger">{{ $message }}</strong>
             </span>
+        @enderror
+    </div>
+
+    <div class="form-group  col-md-6">
+        {{ Form::label('bobot', __('Bobot')) }}
+        {{ Form::number('bobot', '', array('class' => 'form-control','required'=>'required')) }}
+        @error('bobot')
+        <span class="invalid-bobot" role="alert">
+        <strong class="text-danger">{{ $message }}</strong>
+    </span>
         @enderror
     </div>
 

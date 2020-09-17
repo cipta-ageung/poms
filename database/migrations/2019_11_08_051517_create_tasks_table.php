@@ -17,13 +17,15 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('priority');
+            $table->double('cost', 15, 2)->default('0.00');
+            $table->double('bobot', 15, 2)->default('0.00');
             $table->text('description');
             $table->date('due_date')->nullable();
             $table->date('start_date')->nullable();
             $table->integer('assign_to');
             $table->integer('project_id');
             $table->integer('milestone_id')->nullable();
-            $table->string('status')->default('todo');
+            $table->string('status')->default('To Do');
             $table->integer('stage')->default(0);
             $table->integer('order')->default(0);
             $table->timestamps();

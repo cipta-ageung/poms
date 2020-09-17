@@ -50,7 +50,7 @@
                                                                 {{sprintf("%05d", $payment->transaction_id)}}
                                                             </td>
                                                             <td>
-                                                                {{ Auth::user()->invoiceNumberFormat($payment->invoice->invoice_id) }}
+                                                                {{ $payment->invoice->invoice_number }}
                                                             </td>
                                                             <td>
                                                                 {{ Auth::user()->dateFormat($payment->date) }}

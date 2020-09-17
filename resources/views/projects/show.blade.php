@@ -59,11 +59,12 @@
         $total_task = $project->project_total_task($project->id);
         $completed_task=$project->project_complete_task($project->id,$project_last_stage);
 
-         $percentage=0;
-            if($total_task!=0){
-                $percentage = intval(($completed_task / $total_task) * 100);
-            }
-
+         //$percentage=0;
+            //if($total_task!=0){
+               // $percentage = intval(($completed_task / $total_task) * 100);
+           // }
+        
+        $percentage=$project->task_progress($project->id);
 
         $label='';
         if($percentage<=15){

@@ -10,14 +10,15 @@
         @enderror
     </div>
     <div class="form-group  col-md-6">
-        {{ Form::label('priority', __('Priority')) }}
-        {!! Form::select('priority', $priority, null,array('class' => 'form-control selectric','required'=>'required')) !!}
-        @error('priority')
-        <span class="invalid-priority" role="alert">
+        {{ Form::label('bobot', __('Bobot')) }}
+        {{ Form::number('bobot', null, array('class' => 'form-control','required'=>'required')) }}
+        @error('bobot')
+        <span class="invalid-bobot" role="alert">
                 <strong class="text-danger">{{ $message }}</strong>
             </span>
         @enderror
     </div>
+
     <div class="form-group  col-md-6">
         {{ Form::label('start_date', __('Start Date')) }}
         {{ Form::date('start_date', null, array('class' => 'form-control datepicker','required'=>'required')) }}
@@ -56,7 +57,17 @@
             </span>
         @enderror
     </div>
+    <div class="form-group  col-md-6">
+        {{ Form::label('priority', __('Priority')) }}
+        {!! Form::select('priority', $priority, null,array('class' => 'form-control selectric','required'=>'required')) !!}
+        @error('priority')
+        <span class="invalid-priority" role="alert">
+                <strong class="text-danger">{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
 </div>
+
 <div class="row">
     <div class="form-group  col-md-12">
         {{ Form::label('description', __('Description')) }}

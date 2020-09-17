@@ -593,6 +593,7 @@ class ProjectsController extends Controller
                 $request->all(), [
                     'title' => 'required',
                     'priority' => 'required',
+                    'bobot' => 'required',
                     'assign_to' => 'required',
                     'due_date' => 'required',
                     'start_date' => 'required',
@@ -603,6 +604,7 @@ class ProjectsController extends Controller
                 $request->all(), [
                     'title' => 'required',
                     'priority' => 'required',
+                    'bobot' => 'required',
                     'due_date' => 'required',
                     'start_date' => 'required',
                 ]
@@ -661,6 +663,7 @@ class ProjectsController extends Controller
                 $request->all(), [
                     'title' => 'required',
                     'priority' => 'required',
+                    'bobot' => 'required',
                     'assign_to' => 'required',
                     'due_date' => 'required',
                     'start_date' => 'required',
@@ -765,7 +768,7 @@ class ProjectsController extends Controller
             return redirect()->back()->with('error', 'Permission denied.');
         }
     }
-
+    
     public function order(Request $request)
     {
         $post = $request->all();
@@ -773,7 +776,8 @@ class ProjectsController extends Controller
         $stage = Projectstages::find($post['stage_id']);
 
         if (!empty($stage)) {
-            $task->stage = $post['stage_id'];
+            $task->stage = $stage->id;
+            $task->status = $stage->name;
             $task->save();
         }
 
