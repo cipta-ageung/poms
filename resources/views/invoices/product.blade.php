@@ -37,7 +37,7 @@
                 <select class="form-control font-style selectric" id="task_id" name="task_id">
                     <option value="" selected="selected">{{__('Select Task')}}</option>
                     @foreach($tasks as  $task)
-                        <option value="{{$task->id}}">{{$task->title}}</option>
+                        <option data-cost="{{$task->cost}}" value="{{$task->id}}">{{$task->title}}</option>
                     @endforeach
                 </select>
             </div>
@@ -60,7 +60,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label for="price">{{__('Price')}}</label>
-            <input type="number" class="form-control font-style" name="price" required>
+            <input type="number" class="form-control font-style" id="price" name="price" required>
         </div>
     </div>
     @if(isset($invoice))
@@ -77,3 +77,8 @@
     {{ Form::close() }}
 </div>
 
+<script>
+    $('#task_id').change(function(){
+        $('#price').val($(this).find(':selected').data('cost'));
+    });
+</script>

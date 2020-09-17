@@ -458,15 +458,12 @@ class InvoiceController extends Controller
     {
         if(!empty($request->milestone_id))
         {
-            $tasks = Task::where('milestone_id', $request->milestone_id)->get();
-
-            return $tasks;
+            return Task::where('milestone_id', $request->milestone_id)->get();
         }
         else
         {
-            $tasks = Task::where('project_id', $request->project_id)->get();
+            return Task::where('project_id', $request->project_id)->get();
 
-            return $tasks;
         }
 
     }

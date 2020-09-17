@@ -6,8 +6,8 @@
 @push('script-page')
     <script>
         function getTask(obj, project_id) {
-            $('#task_id').empty();
             var milestone_id = obj.value;
+            
             $.ajax({
                 url: '{!! route('invoices.milestone.task') !!}',
                 data: {
@@ -20,11 +20,18 @@
                 cache: false,
                 success: function (data) {
                     var html = '';
-                    for (var i = 0; i < data.length; i++) {
-                        html += '<option value=' + data[i].id + '>' + data[i].title + '</option>';
-
+                    $('#task_id').selectric();
+                    if(data.length===0){
+                        $('#task_id').attr("disabled", "disabled").selectric('refresh');
+                    }else{
+                        for (var i = 0; i < data.length; i++) {
+                            html += '<option data-cost="'+data[i].cost+'" value=' + data[i].id + '>' + data[i].title + '</option>';
+                        }
+                        $('#task_id').find('option').remove().end().append(html);
+                        $('#task_id').removeAttr("disabled").selectric('refresh');
+                        $('#price').val($('#task_id').find(':selected').data('cost'));
                     }
-                    $('#task_id').append(html);
+                    
                 },
                 error: function (data) {
                     data = data.responseJSON;
