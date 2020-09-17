@@ -18,7 +18,6 @@ use App\ProjectFile;
 use App\Projects;
 use App\Projectstages;
 use App\Task;
-use App\TaskFile;
 use App\Timesheet;
 use App\User;
 use App\Userprojects;
@@ -271,21 +270,6 @@ class ProjectsController extends Controller
                     $this->checklistDestroy(new Request(), $tasks, $checklist->id);
                 }
 
-                $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
-                    function ($file) {
-                        $dir = storage_path('app/public/tasks/');
-                        $file->file = $dir . $file->file;
-
-                        return $file;
-                    }
-                );
-                if (!empty($taskFile)) {
-                    foreach ($taskFile->pluck('file') as $file) {
-                        File::delete($file);
-                    }
-                }
-                TaskFile::whereIn('task_id', $tasks)->delete();
-
                 Task::where('project_id', $id)->delete();
 
                 // delete project after all deleted
@@ -474,26 +458,13 @@ class ProjectsController extends Controller
             }
             ProjectFile::where('project_id', $project_id)->delete();
             
-            // delete tasks, comment, checklist, taskfile
+            // delete tasks, comment, checklist, checklist file
             $tasks = Task::select('id')->where('project_id', $project_id)->get()->pluck('id');
             $checklists = CheckList::whereIn('task_id', $tasks)->get();
             foreach($checklists as $checklist) {
                 $this->checklistDestroy(new Request(), $tasks, $checklist->id);
             }
-
-            $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
-                function ($file) {
-                    $dir = storage_path('app/public/tasks/');
-                    $file->file = $dir . $file->file;
-                        return $file;
-                }
-            );
-            if (!empty($taskFile)) {
-                foreach ($taskFile->pluck('file') as $file) {
-                    File::delete($file);
-                }
-            }
-            TaskFile::whereIn('task_id', $tasks)->delete();
+            
             Task::where('project_id', $project_id)->delete();
             
             return redirect()->route('projects.index')->with('success', __('Milestones Project successfully deleted.'));
@@ -781,25 +752,12 @@ class ProjectsController extends Controller
     {
         if (\Auth::user()->can('delete project')) {
             
-            // delete tasks, comment, checklist, taskfile
+            // delete tasks, comment, checklist, checklist file
             $tasks = Task::select('id')->where('project_id', $project_id)->get()->pluck('id');
             $checklists = CheckList::whereIn('task_id', $tasks)->get();
             foreach($checklists as $checklist) {
                 $this->checklistDestroy(new Request(), $tasks, $checklist->id);
             }
-            $taskFile = TaskFile::select('file')->whereIn('task_id', $tasks)->get()->map(
-                function ($file) {
-                    $dir = storage_path('app/public/tasks/');
-                    $file->file = $dir . $file->file;
-                        return $file;
-                }
-            );
-            if (!empty($taskFile)) {
-                foreach ($taskFile->pluck('file') as $file) {
-                    File::delete($file);
-                }
-            }
-            TaskFile::whereIn('task_id', $tasks)->delete();
             Task::where('project_id', $project_id)->delete();
             
             return redirect()->route('projects.index')->with('success', __('Task Project successfully deleted.'));

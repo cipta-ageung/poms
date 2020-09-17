@@ -30,11 +30,6 @@ class Task extends Model
         return $this->hasMany('App\Voicenote', 'task_id', 'id')->orderBy('id', 'DESC');
     }
 
-    public function taskFiles()
-    {
-        return $this->hasMany('App\TaskFile', 'task_id', 'id')->orderBy('id', 'DESC');
-    }
-
     public function taskCheckList()
     {
         return $this->hasMany('App\CheckList', 'task_id', 'id')->orderBy('id', 'DESC');
