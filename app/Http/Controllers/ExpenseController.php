@@ -207,4 +207,22 @@ class ExpenseController extends Controller
             return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
+    
+    public function expenseDestroyProject($project_id)
+    {
+        if (\Auth::user()->can('delete project')) {
+            // delete expense file
+            $expenses = Expense::where('project', $project_id)->get();
+            foreach ($expenses as $expense) {
+                if (Storage::disk('public')->exists('attachment/'. $expense->attachment)) {
+                    Storage::disk('public')->delete('attachment/'.$expense->attachment);
+                }
+                
+                $expense->delete();
+            }
+            return true;
+        }
+        
+        return false;
+    }
 }

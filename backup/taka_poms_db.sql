@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 17 Sep 2020 pada 14.47
+-- Waktu pembuatan: 18 Sep 2020 pada 07.11
 -- Versi server: 10.3.23-MariaDB
 -- Versi PHP: 7.3.6
 
@@ -38,24 +38,6 @@ CREATE TABLE `activity_logs` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `activity_logs`
---
-
-INSERT INTO `activity_logs` (`id`, `user_id`, `project_id`, `log_type`, `remark`, `created_at`, `updated_at`) VALUES
-(55, 1, 21, 'Upload File', 'admin Upload new file <b>Contoh%20Milestones.xlsx</b>', '2020-09-06 22:11:29', '2020-09-06 22:11:29'),
-(56, 1, 22, 'Upload File', 'admin Upload new file <b>Contoh Milestones.xls</b>', '2020-09-08 07:10:01', '2020-09-08 07:10:01'),
-(57, 1, 22, 'Create Invoice', 'admin Create new invoice \"#INV00001\"', '2020-09-08 07:28:11', '2020-09-08 07:28:11'),
-(58, 1, 23, 'Upload File', 'Ian Upload new file <b>Contoh Milestones.xls</b>', '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(59, 1, 23, 'Upload File', 'Ian Upload new file <b>Contoh Milestones.xls</b>', '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(60, 1, 23, 'Upload File', 'Ian Upload new file <b>Contoh Milestones.xls</b>', '2020-09-08 21:08:52', '2020-09-08 21:08:52'),
-(61, 1, 23, 'Create Invoice', 'Ian Create new invoice \"#INV00002\"', '2020-09-08 21:30:12', '2020-09-08 21:30:12'),
-(62, 1, 23, 'Create Invoice', 'admin Create new invoice \"#INV/INT00003\"', '2020-09-08 21:50:39', '2020-09-08 21:50:39'),
-(63, 1, 23, 'Create Task', 'Ridwan Create new Task <b>Test Site Manager Task</b>', '2020-09-08 22:08:42', '2020-09-08 22:08:42'),
-(64, 1, 21, 'Create Invoice', 'admin Create new invoice \"#INV00004\"', '2020-09-11 15:29:07', '2020-09-11 15:29:07'),
-(65, 1, 21, 'Create Invoice', 'admin Create new invoice \"#INV00004\"', '2020-09-11 15:29:57', '2020-09-11 15:29:57'),
-(78, 1, 21, 'Create Invoice', 'admin Create new invoice \"#INV00004\"', '2020-09-13 04:34:44', '2020-09-13 04:34:44');
-
 -- --------------------------------------------------------
 
 --
@@ -79,14 +61,6 @@ CREATE TABLE `bugs` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `bugs`
---
-
-INSERT INTO `bugs` (`id`, `bug_id`, `project_id`, `title`, `priority`, `start_date`, `due_date`, `description`, `status`, `order`, `assign_to`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 9, 'Bug 1', 'law', '2020-06-29', '2020-06-29', 'desc bug 1', '1', '0', '5', 1, '2020-06-29 07:27:13', '2020-06-29 07:27:13'),
-(2, 2, 18, 'Traktor Mogok', 'high', '2020-07-08', '2020-07-08', 'Trktor mogok', '6', '0', '21', 1, '2020-07-08 00:09:51', '2020-07-08 00:12:08');
-
 -- --------------------------------------------------------
 
 --
@@ -102,13 +76,6 @@ CREATE TABLE `bug_comments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `bug_comments`
---
-
-INSERT INTO `bug_comments` (`id`, `comment`, `bug_id`, `user_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Test comment', 1, 'company', 1, '2020-06-29 07:34:27', '2020-06-29 07:34:27');
 
 -- --------------------------------------------------------
 
@@ -128,13 +95,6 @@ CREATE TABLE `bug_files` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `bug_files`
---
-
-INSERT INTO `bug_files` (`id`, `file`, `name`, `extension`, `file_size`, `bug_id`, `user_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(2, '11593441292_label (1).pdf', 'label (1).pdf', '.pdf', '0.02 MB', 1, 'company', 1, '2020-06-29 07:34:52', '2020-06-29 07:34:52');
 
 -- --------------------------------------------------------
 
@@ -197,25 +157,6 @@ CREATE TABLE `check_lists` (
   `percentage` double(15,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `check_lists`
---
-
-INSERT INTO `check_lists` (`id`, `name`, `task_id`, `created_by`, `status`, `created_at`, `updated_at`, `percentage`) VALUES
-(156, 'bikin patok', 373, 1, 0, '2020-09-06 22:18:11', '2020-09-06 22:27:04', 20.00),
-(157, 'pasang garis', 373, 1, 0, '2020-09-06 22:18:23', '2020-09-06 22:27:09', 25.00),
-(158, 'bikin bekisting', 373, 1, 1, '2020-09-06 22:18:57', '2020-09-06 22:27:02', 55.00),
-(163, 'Ruang Keluarga', 384, 1, 1, '2020-09-08 20:01:07', '2020-09-08 20:02:04', 30.00),
-(164, 'Ruang Makan', 384, 1, 1, '2020-09-08 20:01:21', '2020-09-08 20:02:04', 20.00),
-(165, 'Dapur', 384, 1, 1, '2020-09-08 20:01:30', '2020-09-08 20:01:56', 25.00),
-(166, 'Ruang Tamu', 384, 1, 1, '2020-09-08 20:01:48', '2020-09-08 20:01:52', 25.00),
-(171, 'transport', 389, 26, 1, '2020-09-08 21:22:11', '2020-09-08 21:22:24', 50.00),
-(172, 'managment', 389, 26, 1, '2020-09-08 21:22:21', '2020-09-08 21:22:23', 50.00),
-(174, 'A', 391, 26, 1, '2020-09-08 21:27:29', '2020-09-08 21:27:38', 100.00),
-(177, 'test task 1', 416, 1, 1, '2020-09-11 02:56:30', '2020-09-11 02:57:08', 10.00),
-(184, 'checklist1', 382, 1, 0, '2020-09-14 05:44:43', '2020-09-14 05:44:43', 20.00),
-(190, 'TESTIS', 380, 1, 1, '2020-09-17 00:42:35', '2020-09-17 00:42:38', 30.00);
-
 -- --------------------------------------------------------
 
 --
@@ -270,223 +211,17 @@ INSERT INTO `client_permissions` (`id`, `client_id`, `project_id`, `permissions`
 (36, 24, 30, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-13 06:39:29', '2020-09-13 06:39:29'),
 (37, 24, 31, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-13 19:17:35', '2020-09-13 19:17:35'),
 (38, 24, 32, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-16 16:06:59', '2020-09-16 16:06:59'),
-(39, 24, 33, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 00:08:36', '2020-09-17 00:08:36');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `comments`
---
-
-CREATE TABLE `comments` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `checklist_id` int(11) NOT NULL DEFAULT 0,
-  `task_id` int(11) DEFAULT NULL,
-  `user_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` int(11) NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `comments`
---
-
-INSERT INTO `comments` (`id`, `comment`, `checklist_id`, `task_id`, `user_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'tes', 8, NULL, 'company', 1, '2020-05-17 13:50:45', '2020-05-17 13:50:45'),
-(2, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:41:02', '2020-05-18 17:41:02'),
-(3, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:42:56', '2020-05-18 17:42:56'),
-(4, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:45:34', '2020-05-18 17:45:34'),
-(5, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:47:29', '2020-05-18 17:47:29'),
-(6, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:51:33', '2020-05-18 17:51:33'),
-(7, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:51:41', '2020-05-18 17:51:41'),
-(8, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:52:51', '2020-05-18 17:52:51'),
-(9, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:54:30', '2020-05-18 17:54:30'),
-(10, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:55:00', '2020-05-18 17:55:00'),
-(11, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:55:30', '2020-05-18 17:55:30'),
-(12, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:56:32', '2020-05-18 17:56:32'),
-(13, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:57:08', '2020-05-18 17:57:08'),
-(14, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:57:21', '2020-05-18 17:57:21'),
-(15, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:58:04', '2020-05-18 17:58:04'),
-(16, 'tes', 8, NULL, 'company', 1, '2020-05-18 17:59:27', '2020-05-18 17:59:27'),
-(17, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:01:02', '2020-05-18 18:01:02'),
-(18, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:03:24', '2020-05-18 18:03:24'),
-(19, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:03:52', '2020-05-18 18:03:52'),
-(20, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:04:27', '2020-05-18 18:04:27'),
-(21, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:07:22', '2020-05-18 18:07:22'),
-(22, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:07:36', '2020-05-18 18:07:36'),
-(23, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:08:22', '2020-05-18 18:08:22'),
-(24, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:09:22', '2020-05-18 18:09:22'),
-(25, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:10:09', '2020-05-18 18:10:09'),
-(26, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:10:42', '2020-05-18 18:10:42'),
-(27, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:11:53', '2020-05-18 18:11:53'),
-(28, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:12:46', '2020-05-18 18:12:46'),
-(29, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:16:15', '2020-05-18 18:16:15'),
-(30, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:16:58', '2020-05-18 18:16:58'),
-(31, 'asf', 8, NULL, 'company', 1, '2020-05-18 18:19:06', '2020-05-18 18:19:06'),
-(32, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:22:15', '2020-05-18 18:22:15'),
-(33, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:24:54', '2020-05-18 18:24:54'),
-(34, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:25:46', '2020-05-18 18:25:46'),
-(35, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:27:12', '2020-05-18 18:27:12'),
-(36, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:28:39', '2020-05-18 18:28:39'),
-(37, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:28:52', '2020-05-18 18:28:52'),
-(38, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:29:13', '2020-05-18 18:29:13'),
-(39, 'jkhjh', 8, NULL, 'company', 1, '2020-05-18 18:34:12', '2020-05-18 18:34:12'),
-(40, 'jkhjh', 8, NULL, 'company', 1, '2020-05-18 18:35:02', '2020-05-18 18:35:02'),
-(41, 'tes', 8, NULL, 'company', 1, '2020-05-18 18:40:24', '2020-05-18 18:40:24'),
-(42, 'asd', 8, NULL, 'company', 1, '2020-05-18 18:41:17', '2020-05-18 18:41:17'),
-(43, 'hkhjkhk', 8, NULL, 'company', 1, '2020-05-18 18:43:27', '2020-05-18 18:43:27'),
-(44, 'khjhj', 8, NULL, 'company', 1, '2020-05-18 18:46:32', '2020-05-18 18:46:32'),
-(45, 'khjhj', 8, NULL, 'company', 1, '2020-05-18 18:46:54', '2020-05-18 18:46:54'),
-(46, 'khjhj', 8, NULL, 'company', 1, '2020-05-18 18:47:11', '2020-05-18 18:47:11'),
-(47, 'khkhk', 8, NULL, 'company', 1, '2020-05-18 18:47:30', '2020-05-18 18:47:30'),
-(48, 'knmkjk', 8, NULL, 'company', 1, '2020-05-18 18:48:29', '2020-05-18 18:48:29'),
-(49, 'jnnjnj', 8, NULL, 'company', 1, '2020-05-18 18:52:30', '2020-05-18 18:52:30'),
-(50, 'jnnjnj', 8, NULL, 'company', 1, '2020-05-18 18:53:05', '2020-05-18 18:53:05'),
-(51, 'jnnjnj', 8, NULL, 'company', 1, '2020-05-18 18:53:16', '2020-05-18 18:53:16'),
-(52, 'jnnjnj', 8, NULL, 'company', 1, '2020-05-18 18:53:38', '2020-05-18 18:53:38'),
-(53, 'jnnjnj', 8, NULL, 'company', 1, '2020-05-18 18:54:01', '2020-05-18 18:54:01'),
-(54, 'nmnm', 8, NULL, 'company', 1, '2020-05-18 19:00:32', '2020-05-18 19:00:32'),
-(55, 'nmnm', 8, NULL, 'company', 1, '2020-05-18 19:00:50', '2020-05-18 19:00:50'),
-(56, 'nmnm', 8, NULL, 'company', 1, '2020-05-18 19:01:01', '2020-05-18 19:01:01'),
-(57, 'knkjk', 8, NULL, 'company', 1, '2020-05-18 19:01:56', '2020-05-18 19:01:56'),
-(58, 'jnnjnjn', 8, NULL, 'company', 1, '2020-05-18 19:04:24', '2020-05-18 19:04:24'),
-(59, 'kkhk', 8, NULL, 'company', 1, '2020-05-18 19:05:04', '2020-05-18 19:05:04'),
-(60, 'kkhk', 8, NULL, 'company', 1, '2020-05-18 19:07:31', '2020-05-18 19:07:31'),
-(61, 'kkhk', 8, NULL, 'company', 1, '2020-05-18 19:07:50', '2020-05-18 19:07:50'),
-(62, 'jkjjk', 8, NULL, 'company', 1, '2020-05-18 19:09:43', '2020-05-18 19:09:43'),
-(63, 'nnjjn', 8, NULL, 'company', 1, '2020-05-18 19:10:49', '2020-05-18 19:10:49'),
-(64, 'jjkhj', 8, NULL, 'company', 1, '2020-05-18 19:15:58', '2020-05-18 19:15:58'),
-(65, 'jnnnj', 8, NULL, 'company', 1, '2020-05-18 19:38:45', '2020-05-18 19:38:45'),
-(66, 'jnnnj', 8, NULL, 'company', 1, '2020-05-18 19:38:56', '2020-05-18 19:38:56'),
-(67, 'kjkjk', 8, NULL, 'company', 1, '2020-05-18 19:40:02', '2020-05-18 19:40:02'),
-(68, 'kjkjk', 8, NULL, 'company', 1, '2020-05-18 19:40:41', '2020-05-18 19:40:41'),
-(69, 'jkjk', 8, NULL, 'company', 1, '2020-05-18 19:44:41', '2020-05-18 19:44:41'),
-(70, 'hjhjhj', 8, NULL, 'company', 1, '2020-05-18 19:56:22', '2020-05-18 19:56:22'),
-(71, 'jkjk', 8, NULL, 'company', 1, '2020-05-18 20:44:06', '2020-05-18 20:44:06'),
-(72, 'jkjkjk', 8, NULL, 'company', 1, '2020-05-18 20:48:36', '2020-05-18 20:48:36'),
-(73, 'jhhj', 8, NULL, 'company', 1, '2020-05-18 20:52:12', '2020-05-18 20:52:12'),
-(74, 'hjhj', 8, NULL, 'company', 1, '2020-05-18 20:55:17', '2020-05-18 20:55:17'),
-(75, 'hjhj', 8, NULL, 'company', 1, '2020-05-18 20:57:50', '2020-05-18 20:57:50'),
-(76, 'hjhjhjh', 8, NULL, 'company', 1, '2020-05-18 20:58:51', '2020-05-18 20:58:51'),
-(77, 'knknkn', 8, NULL, 'company', 1, '2020-05-18 20:59:27', '2020-05-18 20:59:27'),
-(78, 'nnnnn', 8, NULL, 'company', 1, '2020-05-18 21:13:04', '2020-05-18 21:13:04'),
-(79, 'knknnk', 8, NULL, 'company', 1, '2020-05-18 21:17:22', '2020-05-18 21:17:22'),
-(80, 'knknnk', 8, NULL, 'company', 1, '2020-05-18 21:17:36', '2020-05-18 21:17:36'),
-(81, 'knknnk', 8, NULL, 'company', 1, '2020-05-18 21:17:59', '2020-05-18 21:17:59'),
-(82, 'knknnk', 8, NULL, 'company', 1, '2020-05-18 21:19:27', '2020-05-18 21:19:27'),
-(83, 'knknnk', 8, NULL, 'company', 1, '2020-05-18 21:24:39', '2020-05-18 21:24:39'),
-(84, 'knknnk', 8, NULL, 'company', 1, '2020-05-18 21:27:30', '2020-05-18 21:27:30'),
-(85, 'jkjkjk', 8, NULL, 'company', 1, '2020-05-18 21:28:29', '2020-05-18 21:28:29'),
-(86, 'jkjkjk', 8, NULL, 'company', 1, '2020-05-18 21:32:34', '2020-05-18 21:32:34'),
-(87, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:33:58', '2020-05-18 21:33:58'),
-(88, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:34:31', '2020-05-18 21:34:31'),
-(89, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:34:56', '2020-05-18 21:34:56'),
-(90, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:35:18', '2020-05-18 21:35:18'),
-(91, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:35:33', '2020-05-18 21:35:33'),
-(92, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:36:24', '2020-05-18 21:36:24'),
-(93, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:36:50', '2020-05-18 21:36:50'),
-(94, 'sad', 8, NULL, 'company', 1, '2020-05-18 21:37:47', '2020-05-18 21:37:47'),
-(95, 'cccc', 8, NULL, 'company', 1, '2020-05-18 21:38:21', '2020-05-18 21:38:21'),
-(96, 'asddddd', 8, NULL, 'company', 1, '2020-05-18 21:41:03', '2020-05-18 21:41:03'),
-(97, 'asd', 8, NULL, 'company', 1, '2020-05-18 21:41:43', '2020-05-18 21:41:43'),
-(98, 'qwe', 8, NULL, 'company', 1, '2020-05-18 21:45:51', '2020-05-18 21:45:51'),
-(99, 'qwee', 8, NULL, 'company', 1, '2020-05-18 21:47:25', '2020-05-18 21:47:25'),
-(100, 'eee', 8, NULL, 'company', 1, '2020-05-18 21:49:07', '2020-05-18 21:49:07'),
-(101, 'jjjj', 8, NULL, 'company', 1, '2020-05-18 21:50:46', '2020-05-18 21:50:46'),
-(102, 'SZx', 8, NULL, 'company', 1, '2020-05-18 22:00:48', '2020-05-18 22:00:48'),
-(103, 'nnnn', 8, NULL, 'company', 1, '2020-05-18 22:11:02', '2020-05-18 22:11:02'),
-(104, 'asd', 8, NULL, 'company', 1, '2020-05-18 22:13:52', '2020-05-18 22:13:52'),
-(105, 'nnn', 8, NULL, 'company', 1, '2020-05-18 22:16:38', '2020-05-18 22:16:38'),
-(106, 'nnn', 8, NULL, 'company', 1, '2020-05-18 22:40:13', '2020-05-18 22:40:13'),
-(107, 'nnn', 8, NULL, 'company', 1, '2020-05-18 22:41:49', '2020-05-18 22:41:49'),
-(108, 'qqq', 8, NULL, 'company', 1, '2020-05-18 22:47:20', '2020-05-18 22:47:20'),
-(109, 'ddd', 8, NULL, 'company', 1, '2020-05-18 22:48:39', '2020-05-18 22:48:39'),
-(110, 'mmm', 8, NULL, 'company', 1, '2020-05-18 23:00:16', '2020-05-18 23:00:16'),
-(111, 'm', 8, NULL, 'company', 1, '2020-05-18 23:01:57', '2020-05-18 23:01:57'),
-(112, 'asss', 8, NULL, 'company', 1, '2020-05-18 23:03:37', '2020-05-18 23:03:37'),
-(113, 'q', 8, NULL, 'company', 1, '2020-05-18 23:04:49', '2020-05-18 23:04:49'),
-(114, 'a', 8, NULL, 'company', 1, '2020-05-18 23:08:40', '2020-05-18 23:08:40'),
-(115, 'nmn', 8, NULL, 'company', 1, '2020-05-18 23:14:02', '2020-05-18 23:14:02'),
-(116, 'm', 8, NULL, 'company', 1, '2020-05-18 23:15:20', '2020-05-18 23:15:20'),
-(117, 'nnnnn', 8, NULL, 'company', 1, '2020-05-18 23:24:16', '2020-05-18 23:24:16'),
-(118, 'k', 8, NULL, 'company', 1, '2020-05-18 23:42:12', '2020-05-18 23:42:12'),
-(119, 'p', 8, NULL, 'company', 1, '2020-05-18 23:43:19', '2020-05-18 23:43:19'),
-(120, 'p', 8, NULL, 'company', 1, '2020-05-18 23:44:15', '2020-05-18 23:44:15'),
-(121, 'p', 8, NULL, 'company', 1, '2020-05-18 23:44:32', '2020-05-18 23:44:32'),
-(122, 'p', 8, NULL, 'company', 1, '2020-05-18 23:45:26', '2020-05-18 23:45:26'),
-(123, 'p', 8, NULL, 'company', 1, '2020-05-18 23:45:37', '2020-05-18 23:45:37'),
-(124, 'p', 8, NULL, 'company', 1, '2020-05-18 23:46:39', '2020-05-18 23:46:39'),
-(125, 'p', 8, NULL, 'company', 1, '2020-05-18 23:46:40', '2020-05-18 23:46:40'),
-(126, 'asd', 8, NULL, 'company', 1, '2020-05-18 23:47:00', '2020-05-18 23:47:00'),
-(127, 'asd', 8, NULL, 'company', 1, '2020-05-18 23:47:14', '2020-05-18 23:47:14'),
-(128, 'sd', 8, NULL, 'company', 1, '2020-05-18 23:47:45', '2020-05-18 23:47:45'),
-(129, 'sd', 8, NULL, 'company', 1, '2020-05-18 23:47:59', '2020-05-18 23:47:59'),
-(130, 'as', 8, NULL, 'company', 1, '2020-05-19 02:16:05', '2020-05-19 02:16:05'),
-(131, 'ew', 8, NULL, 'company', 1, '2020-05-19 02:18:37', '2020-05-19 02:18:37'),
-(132, 'qwe', 8, NULL, 'company', 1, '2020-05-19 11:37:34', '2020-05-19 11:37:34'),
-(133, 'qwe', 8, NULL, 'company', 1, '2020-05-19 11:46:22', '2020-05-19 11:46:22'),
-(134, 'bn', 8, NULL, 'company', 1, '2020-05-19 11:56:10', '2020-05-19 11:56:10'),
-(135, 'tes', 8, NULL, 'company', 1, '2020-05-19 12:41:34', '2020-05-19 12:41:34'),
-(136, 'tes', 8, NULL, 'company', 1, '2020-05-19 12:46:05', '2020-05-19 12:46:05'),
-(137, 'gh', 8, NULL, 'company', 1, '2020-05-19 12:52:53', '2020-05-19 12:52:53'),
-(138, 'hjh', 8, NULL, 'company', 1, '2020-05-19 12:53:37', '2020-05-19 12:53:37'),
-(139, 'jk', 8, NULL, 'company', 1, '2020-05-19 12:54:22', '2020-05-19 12:54:22'),
-(140, 'jkj', 8, NULL, 'company', 1, '2020-05-19 12:56:45', '2020-05-19 12:56:45'),
-(141, 'hj', 8, NULL, 'company', 1, '2020-05-19 13:00:57', '2020-05-19 13:00:57'),
-(142, 'hgh', 8, NULL, 'company', 1, '2020-05-20 19:16:36', '2020-05-20 19:16:36'),
-(143, 'nnnn', 8, NULL, 'company', 1, '2020-05-20 19:19:22', '2020-05-20 19:19:22'),
-(144, 'nnnn', 8, NULL, 'company', 1, '2020-05-20 19:20:21', '2020-05-20 19:20:21'),
-(145, 'nmn', 8, NULL, 'company', 1, '2020-05-20 19:21:17', '2020-05-20 19:21:17'),
-(146, 'nmn', 8, NULL, 'company', 1, '2020-05-20 19:21:41', '2020-05-20 19:21:41'),
-(147, 'nmn', 8, NULL, 'company', 1, '2020-05-20 19:22:47', '2020-05-20 19:22:47'),
-(148, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:34:07', '2020-05-20 19:34:07'),
-(149, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:34:37', '2020-05-20 19:34:37'),
-(150, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:34:48', '2020-05-20 19:34:48'),
-(151, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:35:00', '2020-05-20 19:35:00'),
-(152, 'nmn', 8, NULL, 'company', 1, '2020-05-20 19:39:41', '2020-05-20 19:39:41'),
-(153, 'mnn', 8, NULL, 'company', 1, '2020-05-20 19:40:53', '2020-05-20 19:40:53'),
-(154, 'mnn', 8, NULL, 'company', 1, '2020-05-20 19:41:24', '2020-05-20 19:41:24'),
-(155, 'mnn', 8, NULL, 'company', 1, '2020-05-20 19:42:16', '2020-05-20 19:42:16'),
-(156, 'nnnn', 8, NULL, 'company', 1, '2020-05-20 19:44:03', '2020-05-20 19:44:03'),
-(157, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:46:07', '2020-05-20 19:46:07'),
-(158, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:46:20', '2020-05-20 19:46:20'),
-(159, 'nnn', 8, NULL, 'company', 1, '2020-05-20 19:47:08', '2020-05-20 19:47:08'),
-(160, 'nnn', 8, NULL, 'company', 1, '2020-05-20 19:47:16', '2020-05-20 19:47:16'),
-(161, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:48:02', '2020-05-20 19:48:02'),
-(162, 'mm', 8, NULL, 'company', 1, '2020-05-20 19:50:30', '2020-05-20 19:50:30'),
-(163, 'mm', 8, NULL, 'company', 1, '2020-05-20 19:50:43', '2020-05-20 19:50:43'),
-(164, 'mm', 8, NULL, 'company', 1, '2020-05-20 19:50:54', '2020-05-20 19:50:54'),
-(165, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:51:50', '2020-05-20 19:51:50'),
-(166, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:52:44', '2020-05-20 19:52:44'),
-(167, 'nn', 8, NULL, 'company', 1, '2020-05-20 19:55:01', '2020-05-20 19:55:01'),
-(168, 'bnb', 8, NULL, 'company', 1, '2020-05-20 21:25:23', '2020-05-20 21:25:23'),
-(169, 'tes', 8, NULL, 'company', 1, '2020-05-20 21:26:41', '2020-05-20 21:26:41'),
-(170, 'tes', 8, NULL, 'company', 1, '2020-05-22 22:01:39', '2020-05-22 22:01:39'),
-(171, 'tes', 8, NULL, 'company', 1, '2020-05-22 22:09:49', '2020-05-22 22:09:49'),
-(172, 'tes', 8, NULL, 'company', 1, '2020-05-22 22:15:36', '2020-05-22 22:15:36'),
-(173, 'tes', 8, NULL, 'company', 1, '2020-05-22 22:29:56', '2020-05-22 22:29:56'),
-(174, 'tes', 8, NULL, 'company', 1, '2020-05-22 22:32:11', '2020-05-22 22:32:11'),
-(175, 'asd', 8, NULL, 'company', 1, '2020-05-22 22:41:54', '2020-05-22 22:41:54'),
-(176, 'tre', 8, NULL, 'company', 1, '2020-05-22 22:54:37', '2020-05-22 22:54:37'),
-(177, 'testernnow', 8, NULL, 'company', 1, '2020-05-29 00:21:51', '2020-05-29 00:21:51'),
-(178, 'nmn', 14, NULL, 'company', 1, '2020-05-29 00:57:13', '2020-05-29 00:57:13'),
-(179, 'asd', 17, NULL, 'company', 1, '2020-05-29 03:25:30', '2020-05-29 03:25:30'),
-(183, 'tees', 23, NULL, 'company', 1, '2020-06-02 08:55:21', '2020-06-02 08:55:21'),
-(184, 'test', 56, NULL, 'company', 1, '2020-09-05 11:24:55', '2020-09-05 11:24:55'),
-(185, 'test koment', 176, 416, 'company', 1, '2020-09-11 02:53:09', '2020-09-11 02:53:09'),
-(186, 'test koment', 176, 416, 'company', 1, '2020-09-11 02:53:09', '2020-09-11 02:53:09'),
-(187, 'komentar', 177, 416, 'company', 1, '2020-09-11 02:56:53', '2020-09-11 02:56:53'),
-(188, 'test komen 2', 177, NULL, 'company', 1, '2020-09-11 02:57:20', '2020-09-11 02:57:20'),
-(189, 'test komen 3', 177, 416, 'company', 1, '2020-09-11 02:57:47', '2020-09-11 02:57:47'),
-(190, 'OK', 166, NULL, 'company', 1, '2020-09-14 01:04:09', '2020-09-14 01:04:09'),
-(191, 'komen 1', 184, 382, 'company', 1, '2020-09-14 05:45:42', '2020-09-14 05:45:42'),
-(192, 'test', 185, NULL, 'company', 1, '2020-09-14 06:46:25', '2020-09-14 06:46:25'),
-(193, 'test2', 185, NULL, 'company', 1, '2020-09-14 06:46:32', '2020-09-14 06:46:32'),
-(194, 'test3', 185, NULL, 'company', 1, '2020-09-14 06:46:49', '2020-09-14 06:46:49'),
-(195, 'test', 177, 416, 'company', 1, '2020-09-14 06:53:09', '2020-09-14 06:53:09'),
-(196, 'test', 186, NULL, 'company', 1, '2020-09-14 07:14:50', '2020-09-14 07:14:50');
+(39, 24, 33, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 00:08:36', '2020-09-17 00:08:36'),
+(40, 24, 34, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 05:42:53', '2020-09-17 05:42:53'),
+(41, 31, 35, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 06:03:33', '2020-09-17 06:03:33'),
+(42, 24, 36, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 11:47:59', '2020-09-17 11:47:59'),
+(43, 24, 37, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 11:50:48', '2020-09-17 11:50:48'),
+(44, 24, 38, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 16:18:58', '2020-09-17 16:18:58'),
+(45, 24, 39, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 16:40:11', '2020-09-17 16:40:11'),
+(46, 24, 40, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 16:51:26', '2020-09-17 16:51:26'),
+(47, 24, 41, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 16:52:52', '2020-09-17 16:52:52'),
+(48, 24, 42, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 17:07:05', '2020-09-17 17:07:05'),
+(49, 24, 43, ',show activity,show milestone,create milestone,edit milestone,delete milestone,show task,create task,edit task,delete task,move task,create checklist,edit checklist,delete checklist,show checklist,show uploading,manage bug report,create bug report,edit bug report,delete bug report,move bug report,manage timesheet,create timesheet,edit timesheet,delete timesheet', '2020-09-17 17:08:23', '2020-09-17 17:08:23');
 
 -- --------------------------------------------------------
 
@@ -507,14 +242,6 @@ CREATE TABLE `expenses` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `expenses`
---
-
-INSERT INTO `expenses` (`id`, `category_id`, `description`, `amount`, `date`, `project`, `user_id`, `attachment`, `created_by`, `created_at`, `updated_at`) VALUES
-(3, 9, 'Pembelian Automatic Gate Pintu 1', 2500000000.00, '2020-06-30', 21, 3, 'expense_3_idea.png', 1, '2020-06-30 05:51:06', '2020-09-11 03:15:47'),
-(4, 4, 'Office desc', 5000000.00, '2020-09-09', 23, 26, NULL, 1, '2020-09-08 21:47:59', '2020-09-11 03:14:41');
 
 -- --------------------------------------------------------
 
@@ -567,15 +294,6 @@ CREATE TABLE `invoices` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `invoices`
---
-
-INSERT INTO `invoices` (`id`, `invoice_id`, `invoice_number`, `project_id`, `status`, `issue_date`, `due_date`, `discount`, `tax_id`, `terms`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 1, '#INV00001', 22, '3', '2020-09-08', '2020-09-08', 0.00, 3, 'Tgl 28 Sept 2020', 1, '2020-09-08 07:28:11', '2020-09-11 15:26:13'),
-(2, 2, '#INV00002', 23, '3', '2020-09-30', '2020-10-10', 0.00, 3, '', 1, '2020-09-08 21:30:12', '2020-09-11 15:25:05'),
-(3, 3, '#INV00003', 23, '0', '2020-09-09', '2020-09-09', 0.00, 3, '1', 1, '2020-09-08 21:50:39', '2020-09-08 21:50:39');
-
 -- --------------------------------------------------------
 
 --
@@ -594,14 +312,6 @@ CREATE TABLE `invoice_payments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `invoice_payments`
---
-
-INSERT INTO `invoice_payments` (`id`, `transaction_id`, `invoice_id`, `amount`, `date`, `payment_id`, `notes`, `created_at`, `updated_at`) VALUES
-(4, 1, 2, 11000000.00, '2020-09-09', 1, '', '2020-09-08 21:38:35', '2020-09-08 21:38:35'),
-(5, 2, 1, 5750000.00, '2020-09-11', 1, 'Lunas cash', '2020-09-11 03:02:41', '2020-09-11 03:02:41');
-
 -- --------------------------------------------------------
 
 --
@@ -617,14 +327,6 @@ CREATE TABLE `invoice_products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `invoice_products`
---
-
-INSERT INTO `invoice_products` (`id`, `invoice_id`, `iteam`, `price`, `type`, `created_at`, `updated_at`) VALUES
-(12, 1, '-PERSIAPAN', 5750000.00, 'milestone', '2020-09-08 07:28:28', '2020-09-08 07:28:28'),
-(13, 2, 'Term.1', 10000000.00, 'other', '2020-09-08 21:35:21', '2020-09-08 21:35:21');
 
 -- --------------------------------------------------------
 
@@ -678,14 +380,15 @@ CREATE TABLE `leads` (
 --
 
 INSERT INTO `leads` (`id`, `name`, `price`, `stage`, `owner`, `client`, `source`, `created_by`, `notes`, `item_order`, `created_at`, `updated_at`) VALUES
-(3, 'Kyai Maja Prospek', 10000000000.00, 4, 6, 0, 4, 1, 'Proyek meggelegar abad ini', 4, '2020-04-20 03:58:07', '2020-09-08 07:08:29'),
-(4, 'Mrs. Tjuan Prospect', 1500000000.00, 4, 6, 0, 4, 1, 'prospek dari Pak Belly untuk ibu Tjuan buat rumah di Kebayoran Baru', 5, '2020-06-29 04:57:09', '2020-09-08 07:08:29'),
-(6, 'Sianturi Cluster', 14000000000.00, 4, 5, 20, 5, 1, 'Propek project Pak Frans Sianturi', 3, '2020-06-30 06:18:24', '2020-09-08 07:08:29'),
-(9, 'Renovasi Rumah Fajar', 150000000.00, 4, 0, 23, 1, 1, 'notes', 1, '2020-07-22 01:22:58', '2020-09-08 22:13:52'),
-(10, 'Rendra Safutra', 1500000000.00, 4, 0, 25, 5, 1, 'Project Run', 2, '2020-09-06 21:51:43', '2020-09-08 22:13:52'),
-(11, 'Sianturi Cluster', 1200000.00, 4, 0, 20, 5, 1, 'Notes', 0, '2020-09-08 07:06:06', '2020-09-08 22:13:45'),
-(12, 'Rumah Condet', 30000000.00, 4, 26, 27, 5, 1, '-', 0, '2020-09-08 20:36:35', '2020-09-08 20:36:35'),
-(13, 'cipta lead', 10000000.00, 4, 3, 24, 4, 1, 'cipta lead', 0, '2020-09-13 05:51:01', '2020-09-13 05:51:54');
+(3, 'Kyai Maja Prospek', 10000000000.00, 4, 6, 0, 4, 1, 'Proyek meggelegar abad ini', 7, '2020-04-20 03:58:07', '2020-09-17 06:02:54'),
+(4, 'Mrs. Tjuan Prospect', 1500000000.00, 4, 6, 0, 4, 1, 'prospek dari Pak Belly untuk ibu Tjuan buat rumah di Kebayoran Baru', 8, '2020-06-29 04:57:09', '2020-09-17 06:02:54'),
+(6, 'Sianturi Cluster', 14000000000.00, 4, 5, 0, 5, 1, 'Propek project Pak Frans Sianturi', 6, '2020-06-30 06:18:24', '2020-09-17 06:02:54'),
+(9, 'Renovasi Rumah Fajar', 150000000.00, 4, 0, 23, 1, 1, 'notes', 4, '2020-07-22 01:22:58', '2020-09-17 06:02:54'),
+(10, 'Rendra Safutra', 1500000000.00, 4, 0, 25, 5, 1, 'Project Run', 5, '2020-09-06 21:51:43', '2020-09-17 06:02:54'),
+(11, 'Sianturi Cluster', 1200000.00, 4, 0, 0, 5, 1, 'Notes', 1, '2020-09-08 07:06:06', '2020-09-17 06:02:54'),
+(12, 'Rumah Condet', 30000000.00, 4, 26, 27, 5, 1, '-', 2, '2020-09-08 20:36:35', '2020-09-17 06:02:54'),
+(13, 'cipta lead', 10000000.00, 4, 3, 24, 4, 1, 'cipta lead', 3, '2020-09-13 05:51:01', '2020-09-17 06:02:54'),
+(14, 'Edarin Project', 122500000.00, 4, 30, 31, 1, 1, '*note', 0, '2020-09-17 06:02:33', '2020-09-17 06:02:54');
 
 -- --------------------------------------------------------
 
@@ -809,26 +512,6 @@ CREATE TABLE `milestones` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `milestones`
---
-
-INSERT INTO `milestones` (`id`, `project_id`, `title`, `status`, `cost`, `description`, `created_at`, `updated_at`) VALUES
-(173, 21, 'PERSIAPAN', 'Incomplete', 30000000.00, NULL, '2020-09-06 22:11:29', '2020-09-06 22:11:29'),
-(174, 21, 'PEKERJAAN FIT-OUT INTERIOR', 'Incomplete', 1520000000.00, NULL, '2020-09-06 22:11:29', '2020-09-06 22:11:29'),
-(175, 21, 'AREA BRIEFING ROOM', 'Incomplete', 250000000.00, NULL, '2020-09-06 22:11:29', '2020-09-06 22:11:29'),
-(176, 21, 'AREA LOUNGE', 'Incomplete', 1270000000.00, NULL, '2020-09-06 22:11:29', '2020-09-06 22:11:29'),
-(177, 22, 'PERSIAPAN', 'Incomplete', 9000000.00, NULL, '2020-09-08 07:10:01', '2020-09-08 07:10:01'),
-(178, 22, 'PEKERJAAN FIT-OUT INTERIOR', 'Incomplete', 107900000.00, NULL, '2020-09-08 07:10:01', '2020-09-08 07:10:01'),
-(179, 22, 'AREA BRIEFING ROOM', 'Incomplete', 52250000.00, NULL, '2020-09-08 07:10:01', '2020-09-08 07:10:01'),
-(180, 22, 'AREA LOUNGE', 'Incomplete', 55650000.00, NULL, '2020-09-08 07:10:01', '2020-09-08 07:10:01'),
-(195, 23, 'AREA LOUNGE', 'complete', 55650000.00, '', '2020-09-08 21:08:51', '2020-09-08 21:15:59'),
-(196, 23, 'TEST 1', 'Incomplete', 0.00, NULL, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(197, 23, '…', 'Incomplete', 0.00, NULL, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(198, 23, '…', 'Incomplete', 0.00, NULL, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(199, 23, 'AAA', 'Incomplete', 0.00, NULL, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(200, 23, 'BBB', 'Incomplete', 0.00, NULL, '2020-09-08 21:08:51', '2020-09-08 21:08:51');
-
 -- --------------------------------------------------------
 
 --
@@ -858,12 +541,11 @@ CREATE TABLE `model_has_roles` (
 --
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
-(1, 'App\\User', 20),
-(1, 'App\\User', 22),
 (1, 'App\\User', 23),
 (1, 'App\\User', 24),
 (1, 'App\\User', 25),
 (1, 'App\\User', 27),
+(1, 'App\\User', 31),
 (2, 'App\\User', 1),
 (3, 'App\\User', 3),
 (4, 'App\\User', 30),
@@ -890,17 +572,6 @@ CREATE TABLE `notes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `notes`
---
-
-INSERT INTO `notes` (`id`, `title`, `text`, `color`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'Test 2', 'desc test 2', 'bg-yellow-casablanca bg-font-yellow-casablanca', 1, '2020-06-29 07:38:32', '2020-06-29 07:38:32'),
-(2, 'test 3', '2', 'bg-yellow-soft bg-font-yellow-soft', 1, '2020-09-06 23:26:05', '2020-09-06 23:26:05'),
-(3, 'test 4', '4', 'bg-purple-intense bg-font-purple-intense', 1, '2020-09-06 23:26:59', '2020-09-06 23:26:59'),
-(4, 'test 5', '5', 'bg-yellow-casablanca bg-font-yellow-casablanca', 1, '2020-09-06 23:28:25', '2020-09-06 23:28:25'),
-(5, 'Pembayaran Invoice ke 2', 'Invoices #INV/INT00002 sudah dibayar ya, tolong di cek', 'bg-yellow-soft bg-font-yellow-soft', 27, '2020-09-08 21:42:56', '2020-09-08 21:42:56');
 
 -- --------------------------------------------------------
 
@@ -1149,15 +820,6 @@ CREATE TABLE `projects` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `projects`
---
-
-INSERT INTO `projects` (`id`, `name`, `price`, `start_date`, `due_date`, `client`, `description`, `label`, `lead`, `status`, `is_active`, `created_by`, `created_at`, `updated_at`) VALUES
-(21, 'Rendra House', 1550000000.00, '2020-09-07', '2020-11-30', 25, '-', 5, 10, 'on_going', 1, 1, '2020-09-06 21:53:01', '2020-09-06 21:53:01'),
-(22, 'Sianturi', 1200000000.00, '2020-09-08', '2020-09-08', 20, 'Sianturi project', 5, 6, 'on_going', 1, 1, '2020-09-08 07:09:21', '2020-09-08 07:09:21'),
-(23, 'Rumah Condet', 30000000.00, '2020-09-09', '2020-10-09', 27, '-', 2, 12, 'on_going', 1, 1, '2020-09-08 20:39:42', '2020-09-08 20:39:42');
-
 -- --------------------------------------------------------
 
 --
@@ -1198,15 +860,6 @@ CREATE TABLE `project_files` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `project_files`
---
-
-INSERT INTO `project_files` (`id`, `project_id`, `file_name`, `file_path`, `created_at`, `updated_at`) VALUES
-(24, 21, 'Contoh%20Milestones.xlsx', '21_01f62b5bd35f641f55f963e0bf309ca2_Contoh%20Milestones.xlsx', '2020-09-06 22:11:29', '2020-09-06 22:11:29'),
-(25, 22, 'Contoh Milestones.xls', '22_483a4265b0ad2313ade86149f69a5db6_Contoh Milestones.xls', '2020-09-08 07:10:01', '2020-09-08 07:10:01'),
-(28, 23, 'Contoh Milestones.xls', '23_9027218015578ee26ce8b4558e2151e2_Contoh Milestones.xls', '2020-09-08 21:08:51', '2020-09-08 21:08:51');
 
 -- --------------------------------------------------------
 
@@ -1848,6 +1501,8 @@ CREATE TABLE `tasks` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `priority` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cost` double(15,2) NOT NULL DEFAULT 0.00,
+  `bobot` double(15,2) NOT NULL DEFAULT 0.00,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `due_date` date DEFAULT NULL,
   `start_date` date DEFAULT NULL,
@@ -1860,58 +1515,6 @@ CREATE TABLE `tasks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `tasks`
---
-
-INSERT INTO `tasks` (`id`, `title`, `priority`, `description`, `due_date`, `start_date`, `assign_to`, `project_id`, `milestone_id`, `status`, `stage`, `order`, `created_at`, `updated_at`) VALUES
-(371, 'Mob-Demob Pekerja Dan Material', 'low', ' ', '2020-09-23', '2020-09-08', 1, 21, 173, 'todo', 2, 1, '2020-09-06 22:11:29', '2020-09-06 22:17:38'),
-(372, 'Fasilitas Sementara', 'low', ' ', '2020-09-24', '2020-09-09', 1, 21, 173, 'todo', 1, 1, '2020-09-06 22:11:29', '2020-09-06 22:17:30'),
-(373, 'Pengukuran', 'low', ' ', '2020-09-25', '2020-09-10', 1, 21, 173, 'todo', 2, 0, '2020-09-06 22:11:29', '2020-09-06 22:17:35'),
-(374, 'FINISHING LANTAI', 'low', ' ', '2020-11-20', '2020-09-13', 1, 21, 175, 'todo', 1, 5, '2020-09-06 22:11:29', '2020-09-06 22:17:31'),
-(375, 'FINISHING DINDING', 'low', ' ', '2020-11-25', '2020-09-14', 1, 21, 175, 'todo', 1, 4, '2020-09-06 22:11:29', '2020-09-06 22:17:31'),
-(376, 'FINISHING CEILING', 'low', ' ', '2020-11-30', '2020-09-15', 1, 21, 175, 'todo', 1, 3, '2020-09-06 22:11:29', '2020-09-06 22:17:30'),
-(377, 'FINISHING LANTAI', 'low', ' ', '2020-11-21', '2020-09-17', 1, 21, 176, 'todo', 1, 7, '2020-09-06 22:11:29', '2020-09-06 22:17:31'),
-(378, 'FINISHING DINDING', 'low', ' ', '2020-11-22', '2020-09-18', 1, 21, 176, 'todo', 1, 6, '2020-09-06 22:11:29', '2020-09-06 22:17:31'),
-(379, 'FINISHING CEILING', 'low', ' ', '2020-11-23', '2020-09-19', 1, 21, 176, 'todo', 1, 8, '2020-09-06 22:11:29', '2020-09-06 22:17:31'),
-(380, 'Mob-Demob Pekerja Dan Material', 'low', ' ', '2020-07-23', '2020-07-23', 1, 22, 173, 'todo', 2, 0, '2020-09-08 07:10:01', '2020-09-08 07:10:25'),
-(381, 'Fasilitas Sementara', 'low', ' ', '2020-07-26', '2020-07-24', 1, 22, 173, 'todo', 1, 1, '2020-09-08 07:10:01', '2020-09-08 19:57:36'),
-(382, 'Pengukuran', 'low', ' ', '2020-07-25', '2020-07-25', 1, 22, 173, 'todo', 1, 0, '2020-09-08 07:10:01', '2020-09-13 00:45:10'),
-(383, 'FINISHING LANTAI', 'low', ' ', '2020-08-04', '2020-07-28', 1, 22, 175, 'todo', 1, 5, '2020-09-08 07:10:01', '2020-09-13 00:45:10'),
-(384, 'CAT DINDING 1', 'low', '', '2020-09-09', '2020-09-09', 1, 22, 177, 'todo', 3, 0, '2020-09-08 07:10:01', '2020-09-08 20:02:23'),
-(385, 'FINISHING CEILING', 'low', ' ', '2020-08-06', '2020-07-30', 1, 22, 175, 'todo', 1, 4, '2020-09-08 07:10:01', '2020-09-13 00:45:10'),
-(386, 'FINISHING LANTAI', 'low', ' ', '2020-08-15', '2020-08-07', 1, 22, 176, 'todo', 1, 6, '2020-09-08 07:10:01', '2020-09-13 00:45:10'),
-(387, 'FINISHING DINDING', 'low', ' ', '2020-08-16', '2020-08-08', 1, 22, 176, 'todo', 1, 2, '2020-09-08 07:10:01', '2020-09-13 00:45:10'),
-(388, 'FINISHING CEILING', 'low', ' ', '2020-08-15', '2020-08-09', 1, 22, 176, 'todo', 1, 3, '2020-09-08 07:10:01', '2020-09-13 00:45:10'),
-(389, 'Mob-Demob Pekerja Dan Material', 'low', ' ', '2020-07-23', '2020-07-23', 26, 23, 173, 'todo', 4, 1, '2020-09-08 20:43:47', '2020-09-08 22:09:24'),
-(390, 'Fasilitas Sementara', 'low', ' ', '2020-07-26', '2020-07-24', 26, 23, 173, 'todo', 1, 7500000, '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(391, 'Pengukuran', 'low', ' ', '2020-07-25', '2020-07-25', 26, 23, 173, 'todo', 4, 2, '2020-09-08 20:43:47', '2020-09-08 22:09:24'),
-(392, 'FINISHING LANTAI', 'low', ' ', '2020-08-04', '2020-07-28', 26, 23, 175, 'todo', 1, 22000000, '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(393, 'FINISHING DINDING', 'low', ' ', '2020-08-05', '2020-07-29', 26, 23, 175, 'todo', 1, 11500000, '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(394, 'FINISHING CEILING', 'low', ' ', '2020-08-06', '2020-07-30', 26, 23, 175, 'todo', 1, 18750000, '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(395, 'FINISHING LANTAI', 'low', ' ', '2020-08-15', '2020-08-07', 26, 23, 176, 'todo', 1, 25200000, '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(396, 'FINISHING DINDING', 'low', ' ', '2020-08-16', '2020-08-08', 26, 23, 176, 'todo', 1, 14000000, '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(397, 'FINISHING CEILING', 'low', ' ', '2020-08-15', '2020-08-09', 26, 23, 176, 'todo', 1, 16450000, '2020-09-08 20:43:47', '2020-09-08 20:43:47'),
-(398, 'Mob-Demob Pekerja Dan Material', 'low', ' ', '2020-07-23', '2020-07-23', 26, 23, 173, 'todo', 1, 500000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(399, 'Fasilitas Sementara', 'low', ' ', '2020-07-26', '2020-07-24', 26, 23, 173, 'todo', 1, 7500000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(400, 'Pengukuran', 'low', ' ', '2020-07-25', '2020-07-25', 26, 23, 173, 'todo', 1, 1000000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(401, 'FINISHING LANTAI', 'low', ' ', '2020-08-04', '2020-07-28', 26, 23, 175, 'todo', 1, 22000000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(402, 'FINISHING DINDING', 'low', ' ', '2020-08-05', '2020-07-29', 26, 23, 175, 'todo', 1, 11500000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(403, 'FINISHING CEILING', 'low', ' ', '2020-08-06', '2020-07-30', 26, 23, 175, 'todo', 1, 18750000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(404, 'FINISHING LANTAI', 'low', ' ', '2020-08-15', '2020-08-07', 26, 23, 176, 'todo', 1, 25200000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(405, 'FINISHING DINDING', 'low', ' ', '2020-08-16', '2020-08-08', 26, 23, 176, 'todo', 1, 14000000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(406, 'FINISHING CEILING', 'low', ' ', '2020-08-15', '2020-08-09', 26, 23, 176, 'todo', 1, 16450000, '2020-09-08 20:48:55', '2020-09-08 20:48:55'),
-(407, 'Mob-Demob Pekerja Dan Material', 'low', ' ', '2020-07-23', '2020-07-23', 26, 23, 173, 'todo', 1, 500000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(408, 'Fasilitas Sementara', 'low', ' ', '2020-07-26', '2020-07-24', 26, 23, 173, 'todo', 1, 7500000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(409, 'Pengukuran', 'low', ' ', '2020-07-25', '2020-07-25', 26, 23, 173, 'todo', 1, 1000000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(410, 'FINISHING LANTAI', 'low', ' ', '2020-08-04', '2020-07-28', 26, 23, 175, 'todo', 1, 22000000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(411, 'FINISHING DINDING', 'low', ' ', '2020-08-05', '2020-07-29', 26, 23, 175, 'todo', 1, 11500000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(412, 'FINISHING CEILING', 'low', ' ', '2020-08-06', '2020-07-30', 26, 23, 175, 'todo', 1, 18750000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(413, 'FINISHING LANTAI', 'low', ' ', '2020-08-15', '2020-08-07', 26, 23, 176, 'todo', 1, 25200000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(414, 'FINISHING DINDING', 'low', ' ', '2020-08-16', '2020-08-08', 26, 23, 176, 'todo', 1, 14000000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(415, 'FINISHING CEILING', 'low', ' ', '2020-08-15', '2020-08-09', 26, 23, 176, 'todo', 1, 16450000, '2020-09-08 21:08:51', '2020-09-08 21:08:51'),
-(416, 'Test Site Manager Task', 'medium', '-', '2020-09-09', '2020-09-09', 0, 23, 195, 'todo', 4, 0, '2020-09-08 22:08:42', '2020-09-08 22:13:26');
 
 -- --------------------------------------------------------
 
@@ -1933,7 +1536,8 @@ CREATE TABLE `taxes` (
 --
 
 INSERT INTO `taxes` (`id`, `name`, `rate`, `created_by`, `created_at`, `updated_at`) VALUES
-(3, 'No Tax', 0.00, 1, '2020-09-08 21:50:30', '2020-09-08 21:50:30');
+(3, 'No Tax', 0.00, 1, '2020-09-08 21:50:30', '2020-09-08 21:50:30'),
+(6, 'ppn', 10.00, 1, '2020-09-17 06:07:38', '2020-09-17 06:07:38');
 
 -- --------------------------------------------------------
 
@@ -1953,20 +1557,6 @@ CREATE TABLE `timesheets` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `timesheets`
---
-
-INSERT INTO `timesheets` (`id`, `project_id`, `user_id`, `task_id`, `date`, `hours`, `remark`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, 7, '2020-04-21', 48.00, '', '2020-04-20 04:26:59', '2020-04-20 04:26:59'),
-(2, 9, 1, 59, '2020-06-29', 8.00, 'remark 1', '2020-06-29 07:24:08', '2020-06-29 07:24:08'),
-(3, 16, 1, 204, '2020-07-01', 500.00, '', '2020-06-30 05:41:25', '2020-06-30 05:41:25'),
-(4, 16, 1, 205, '2020-06-30', 200.00, '', '2020-06-30 05:41:48', '2020-06-30 05:41:48'),
-(5, 16, 1, 217, '2020-06-30', 720.00, '', '2020-06-30 05:42:20', '2020-06-30 05:42:20'),
-(6, 16, 1, 208, '2020-06-30', 850.00, '', '2020-06-30 05:42:37', '2020-06-30 05:42:37'),
-(7, 18, 1, 278, '2020-07-08', 8.00, 'remark', '2020-07-08 00:13:14', '2020-07-08 00:13:14'),
-(9, 19, 1, 328, '2020-07-22', 12.00, '12 Jam Kerja', '2020-07-22 03:16:40', '2020-07-22 03:16:40');
-
 -- --------------------------------------------------------
 
 --
@@ -1980,16 +1570,6 @@ CREATE TABLE `userprojects` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `userprojects`
---
-
-INSERT INTO `userprojects` (`id`, `user_id`, `project_id`, `created_at`, `updated_at`) VALUES
-(48, 1, 21, '2020-09-06 21:53:01', '2020-09-06 21:53:01'),
-(50, 1, 22, '2020-09-08 07:09:21', '2020-09-08 07:09:21'),
-(52, 1, 23, '2020-09-08 20:39:42', '2020-09-08 20:39:42'),
-(53, 26, 23, '2020-09-08 20:39:42', '2020-09-08 20:39:42');
 
 -- --------------------------------------------------------
 
@@ -2019,23 +1599,22 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `type`, `avatar`, `lang`, `created_by`, `delete_status`, `is_active`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@example.com', NULL, '$2y$10$gU7.XjT8dgD/EIB5cDHdmuDxJ7k548oezLj.G/CSwto5HSovIfQLO', 'company', 'idea_1593526079_1600070453.png', 'en', 0, 1, 1, 'ct09ziaCp4uOlHkjkLHAeM0FA3LeY0YskVJIjNf44CBjVaqkQPpg8eTl116u', '2020-04-14 14:43:00', '2020-09-14 01:01:55'),
-(3, 'cipta ageung', 'cipta_ageung@yahoo.co.id', NULL, '$2y$10$/56GTq.aQkqZkeagOoLQo.zR3geVsMRBA5M1rfYIjdWhElSiqPrJS', 'Super Admin', '', 'en', 1, 1, 1, 'AzVr1RQvWPPHOazYdtLHtZ7NlXel4S9CWngwZuOtnyvr7Woq2bzrRJgKaZ7L', '2020-04-14 14:45:10', '2020-09-14 06:14:26'),
+(1, 'admin', 'admin@example.com', NULL, '$2y$10$gU7.XjT8dgD/EIB5cDHdmuDxJ7k548oezLj.G/CSwto5HSovIfQLO', 'company', 'idea_1593526079_1600070453.png', 'en', 0, 1, 1, 'oU7p9DsJiav7pAr0EFn07A5Hoxp590XBUMYwRCGrBN8q4yBJnQtgGi5Vdmsc', '2020-04-14 14:43:00', '2020-09-14 01:01:55'),
+(3, 'cipta ageung', 'cipta_ageung@yahoo.co.id', NULL, '$2y$10$/56GTq.aQkqZkeagOoLQo.zR3geVsMRBA5M1rfYIjdWhElSiqPrJS', 'Super Admin', '', 'en', 1, 1, 1, 'vBFjiVngAxKY9clS5TPG0hYfDInddmKdlsEttedWRMBy8DkV3s1qwdnwtc6Z', '2020-04-14 14:45:10', '2020-09-14 06:14:26'),
 (5, 'Adi', 'adi@matrixindo.co.id', NULL, '$2y$10$wGnyznyR887QTgYKpiIw5uEi.2751dypvzN422FHiGqDJjdwQQfVK', 'Super Admin', '', 'en', 1, 1, 1, 'PTWqTJwK2DFxYaSvT9RNKL1B1YYNw5HhR1SPZIZfCcaGkKHnYdhKNzz2nusj', '2020-04-17 06:23:58', '2020-04-20 05:10:09'),
 (6, 'Belly Ferdiansyah', 'belly@matrixindo.co.id', NULL, '$2y$10$1PxB9i4CDrAPsArVal2Sa.NYCkAZ.VNqsEO../blWlNAVYVEGXoH.', 'Super Admin', '', 'en', 1, 1, 1, NULL, '2020-04-17 06:48:51', '2020-04-20 05:10:31'),
 (9, 'Albert', 'albert@matrixindo.co.id', NULL, '$2y$10$wbjfrcVFLXS.vFdJ9XIcGumlqBudW6n2Rl.qFMAxpE1fBgp1Vtx6m', 'Project Control', '', 'en', 1, 1, 1, NULL, '2020-04-20 03:43:12', '2020-04-20 03:43:12'),
 (10, 'Ratna', 'ratna@matrixindo.co.id', NULL, '$2y$10$KHwFjaNN8/8R1/2rwc8Tk.tnyoeP3eSyTX0swGfTY.6yUp3V1nBTK', 'HO-Admin', '', 'en', 1, 1, 1, NULL, '2020-04-20 03:46:19', '2020-04-20 03:46:19'),
 (11, 'Chyntia', 'chyntia@matrixindo.co.id', NULL, '$2y$10$4UqoV18Cxn3/9vDd9Da1XeAjnjLZAWAKg8NZE6vA1FspRm.zHlUoG', 'Finance', '', 'en', 1, 1, 1, NULL, '2020-04-20 03:49:30', '2020-04-20 03:49:30'),
 (12, 'Fizri', 'fizri@matrixindo.co.id', NULL, '$2y$10$SUuMGsF6yzXZlo.yNspeIu3R6LgvYoaqcKqLz1vzEXyDTbh60N6su', 'Project Admin', '', 'en', 1, 1, 1, NULL, '2020-04-20 03:52:13', '2020-04-20 03:53:04'),
-(20, 'Frans Sianturi', 'frans.s@gmail.com', NULL, '$2y$10$qPi7rOjI7KDcA7I17ZLNr.JlPgnMJAYznSnBjO/2NvC/N327PfMKG', 'client', '', 'en', 1, 1, 1, NULL, '2020-06-30 06:16:30', '2020-09-14 05:55:19'),
-(22, 'Mahardika Putra', 'm.dhika@gmail.com', NULL, '$2y$10$f.P.KwhK/sUP7c3jzrAcHuCzATzZODq1p5qmtLZR2qs0M7WX1/SFa', 'client', '', 'en', 1, 1, 1, NULL, '2020-07-07 22:16:12', '2020-07-07 22:16:12'),
-(23, 'Fajar Sebastian', 'hello.b5code@gmail.com', NULL, '$2y$10$0jErfW/YIfnTk2xQ684AdeUgL3gFy1oyre3Z.zO0E1zPKpOrMciFa', 'client', '', 'en', 1, 1, 1, NULL, '2020-07-22 01:09:03', '2020-08-23 23:33:52'),
+(23, 'Prasojo', 'hello.b5code@gmail.com', NULL, '$2y$10$0jErfW/YIfnTk2xQ684AdeUgL3gFy1oyre3Z.zO0E1zPKpOrMciFa', 'client', '', 'en', 1, 1, 1, NULL, '2020-07-22 01:09:03', '2020-09-17 06:01:13'),
 (24, 'cipta client', 'agicipta73@gmail.com', NULL, '$2y$10$.bdewkEaAZdpDiDvMDJ8LOqeGEhelRXPD5uciqCyNHlEuhB97oYqm', 'client', '', 'en', 1, 1, 1, NULL, '2020-09-02 05:25:44', '2020-09-02 05:25:44'),
 (25, 'Rendra Safutra', 'rendra@takatech.co.id', NULL, '$2y$10$gwadLeeauZhUGLzhxiqAA.HJNl6s3b27VyRg8IsRV.GXFx62CNi4G', 'client', '', 'en', 1, 1, 1, NULL, '2020-09-06 21:49:40', '2020-09-06 21:49:40'),
 (26, 'Ian', 'ian@matrixindo.co.id', NULL, '$2y$10$WJx/0J1AFW63dta5H6dzCOEjxxWcenkbzNEqLPwAIO8/IZYTMHKXy', 'Super Admin', '', 'en', 1, 1, 1, NULL, '2020-09-08 20:20:56', '2020-09-08 20:20:56'),
 (27, 'Dewi - Condet', 'client1@matrixindo.co.id', NULL, '$2y$10$CuzyueEfwQWB7TsURvqaT.gVJ2eWzzcBvbRJVdC0H6OA4ItcDnCEa', 'client', '', 'en', 1, 1, 1, NULL, '2020-09-08 20:26:57', '2020-09-08 20:26:57'),
 (29, 'cipta admin', 'agi.cipta73@gmail.com', NULL, '$2y$10$tDzhJGGzXQ1cNu3jNXHIUOLpyFi28ZC0/4RAyPz/ei/95Yzou4LuK', 'company', 'idea_1593526079_1600070453.png', 'en', 0, 1, 1, '', '2020-04-14 14:43:00', '2020-09-14 01:01:55'),
-(30, 'Fajar', 'sebastian.fajr@gmail.com', NULL, '$2y$10$6bH6OiVxt/V8bcul.xhw3.pdFVI.Sz5n/PoDaJTpZkTS5rx5tnvie', 'Project Manager', '', 'en', 1, 1, 1, '60pjrbqCks42bhqJhAJftxvVIRdLwH2kGA4yD4hZKzBHueuqyyrWva1kdhHr', '2020-09-14 05:55:39', '2020-09-14 06:26:21');
+(30, 'Fajar', 'sebastian.fajr@gmail.com', NULL, '$2y$10$6bH6OiVxt/V8bcul.xhw3.pdFVI.Sz5n/PoDaJTpZkTS5rx5tnvie', 'Project Manager', '', 'en', 1, 1, 1, '60pjrbqCks42bhqJhAJftxvVIRdLwH2kGA4yD4hZKzBHueuqyyrWva1kdhHr', '2020-09-14 05:55:39', '2020-09-14 06:26:21'),
+(31, 'Edar', 'edarin.net@gmail.com', NULL, '$2y$10$fsWgvDq62OtjiqiWfL/K4uHFGsaqOJrHCghqV5mBSzU5bnh/u0YIe', 'client', '', 'en', 1, 1, 1, NULL, '2020-09-17 06:01:42', '2020-09-17 06:01:42');
 
 --
 -- Indexes for dumped tables
@@ -2088,12 +1667,6 @@ ALTER TABLE `check_lists`
 -- Indeks untuk tabel `client_permissions`
 --
 ALTER TABLE `client_permissions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `comments`
---
-ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2292,7 +1865,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `activity_logs`
 --
 ALTER TABLE `activity_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT untuk tabel `bugs`
@@ -2322,25 +1895,19 @@ ALTER TABLE `bug_statuses`
 -- AUTO_INCREMENT untuk tabel `checklist_comments`
 --
 ALTER TABLE `checklist_comments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT untuk tabel `check_lists`
 --
 ALTER TABLE `check_lists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
 
 --
 -- AUTO_INCREMENT untuk tabel `client_permissions`
 --
 ALTER TABLE `client_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-
---
--- AUTO_INCREMENT untuk tabel `comments`
---
-ALTER TABLE `comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT untuk tabel `expenses`
@@ -2364,13 +1931,13 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT untuk tabel `invoice_payments`
 --
 ALTER TABLE `invoice_payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `invoice_products`
 --
 ALTER TABLE `invoice_products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `labels`
@@ -2382,7 +1949,7 @@ ALTER TABLE `labels`
 -- AUTO_INCREMENT untuk tabel `leads`
 --
 ALTER TABLE `leads`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `leadsources`
@@ -2406,7 +1973,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `milestones`
 --
 ALTER TABLE `milestones`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=397;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=424;
 
 --
 -- AUTO_INCREMENT untuk tabel `notes`
@@ -2442,7 +2009,7 @@ ALTER TABLE `productunits`
 -- AUTO_INCREMENT untuk tabel `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT untuk tabel `projectstages`
@@ -2454,7 +2021,7 @@ ALTER TABLE `projectstages`
 -- AUTO_INCREMENT untuk tabel `project_files`
 --
 ALTER TABLE `project_files`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT untuk tabel `roles`
@@ -2472,13 +2039,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT untuk tabel `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=858;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=912;
 
 --
 -- AUTO_INCREMENT untuk tabel `taxes`
 --
 ALTER TABLE `taxes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `timesheets`
@@ -2490,13 +2057,13 @@ ALTER TABLE `timesheets`
 -- AUTO_INCREMENT untuk tabel `userprojects`
 --
 ALTER TABLE `userprojects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

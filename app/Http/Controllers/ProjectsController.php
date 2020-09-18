@@ -29,6 +29,7 @@ use App\Imports\MilestoneImport;
 use Excel;
 use App\Http\Controllers\ChecklistCommentsController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ExpenseController;
 
 class ProjectsController extends Controller
 {
@@ -250,6 +251,10 @@ class ProjectsController extends Controller
                     $invoiceController->destroy($invoice);
                 }
                 $this->milestoneProjectDestroy($id);
+                Timesheet::where('project_id', $id)->delete();
+                $this->bugCommentDestroyProject($id);
+                $expenseController = new ExpenseController();
+                $expenseController->expenseDestroyProject($id);
                 $project->delete();
 
                 return redirect()->route('projects.index')->with('success', __('Project successfully deleted.'));
@@ -1359,6 +1364,28 @@ class ProjectsController extends Controller
         }
         $commentFile->delete();
 
+        return "true";
+    }
+    
+    public function bugCommentDestroyProject($project_id)
+    {
+        // get bug comment
+        $bugs = Bug::where('project_id', $project_id)->get();
+
+        // delete bug file
+        foreach ($bugs as $bug) {
+            $bugComments = BugComment::where('bug_id', $bug->id)->delete();
+            $bugFiles = BugFile::where('bug_id', $bug->id)->get();
+            foreach ($bugFiles as $bugFile) {
+                if (Storage::disk('public')->exists('bugs/'. $bugFile->file)) {
+                    Storage::disk('public')->delete('bugs/'.$bugFile->file);
+                }
+                
+            }
+            $bugFiles->delete();
+            $bug->delete();
+        }
+        
         return "true";
     }
 }
