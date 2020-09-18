@@ -376,23 +376,6 @@ CREATE TABLE `leads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `leads`
---
-
-INSERT INTO `leads` (`id`, `name`, `price`, `stage`, `owner`, `client`, `source`, `created_by`, `notes`, `item_order`, `created_at`, `updated_at`) VALUES
-(3, 'Kyai Maja Prospek', 10000000000.00, 4, 6, 0, 4, 1, 'Proyek meggelegar abad ini', 7, '2020-04-20 03:58:07', '2020-09-17 06:02:54'),
-(4, 'Mrs. Tjuan Prospect', 1500000000.00, 4, 6, 0, 4, 1, 'prospek dari Pak Belly untuk ibu Tjuan buat rumah di Kebayoran Baru', 8, '2020-06-29 04:57:09', '2020-09-17 06:02:54'),
-(6, 'Sianturi Cluster', 14000000000.00, 4, 5, 0, 5, 1, 'Propek project Pak Frans Sianturi', 6, '2020-06-30 06:18:24', '2020-09-17 06:02:54'),
-(9, 'Renovasi Rumah Fajar', 150000000.00, 4, 0, 23, 1, 1, 'notes', 4, '2020-07-22 01:22:58', '2020-09-17 06:02:54'),
-(10, 'Rendra Safutra', 1500000000.00, 4, 0, 25, 5, 1, 'Project Run', 5, '2020-09-06 21:51:43', '2020-09-17 06:02:54'),
-(11, 'Sianturi Cluster', 1200000.00, 4, 0, 0, 5, 1, 'Notes', 1, '2020-09-08 07:06:06', '2020-09-17 06:02:54'),
-(12, 'Rumah Condet', 30000000.00, 4, 26, 27, 5, 1, '-', 2, '2020-09-08 20:36:35', '2020-09-17 06:02:54'),
-(13, 'cipta lead', 10000000.00, 4, 3, 24, 4, 1, 'cipta lead', 3, '2020-09-13 05:51:01', '2020-09-17 06:02:54'),
-(14, 'Edarin Project', 122500000.00, 4, 30, 31, 1, 1, '*note', 0, '2020-09-17 06:02:33', '2020-09-17 06:02:54');
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `leadsources`
 --
 
